@@ -1,0 +1,315 @@
+[
+  {
+    "success": true,
+    "lastUpdated": 1728154089774,
+    "mayor": {
+      "key": "farming",
+      "name": "Finnegan",
+      "perks": [
+        {
+          "name": "Pest Eradicator",
+          "description": "The duration of Pesthunter Phillip's §6☘ Farming Fortune §7bonus is now §a60m§7. §2Pests §7are now §a4x §7more likely to spawn in sprayed plots."
+        },
+        {
+          "name": "GOATed",
+          "description": "§eJacob's Farming Contest §7brackets include up to §a10% §7more players each."
+        },
+        {
+          "name": "Pelt-pocalypse",
+          "description": "Obtain §a1.5x §7more §5pelts §7from §aTrevor §7in the §eMushroom Desert§7, hunt a new trapper mob, and purchase items from a new trapper shop."
+        }
+      ],
+      "minister": {
+        "key": "fishing",
+        "name": "Marina",
+        "perk": {
+          "name": "Fishing Festival",
+          "description": "Start a special fishing event the first §b3 §7days of each month!",
+          "minister": true
+        }
+      },
+      "election": {
+        "year": 375,
+        "candidates": [
+          {
+            "key": "fishing",
+            "name": "Marina",
+            "perks": [
+              {
+                "name": "Fishing Festival",
+                "description": "Start a special fishing event the first §b3 §7days of each month!",
+                "minister": true
+              }
+            ],
+            "votes": 220626
+          },
+          {
+            "key": "farming",
+            "name": "Finnegan",
+            "perks": [
+              {
+                "name": "Pest Eradicator",
+                "description": "The duration of Pesthunter Phillip's §6☘ Farming Fortune §7bonus is now §a60m§7. §2Pests §7are now §a4x §7more likely to spawn in sprayed plots.",
+                "minister": false
+              },
+              {
+                "name": "GOATed",
+                "description": "§eJacob's Farming Contest §7brackets include up to §a10% §7more players each.",
+                "minister": false
+              },
+              {
+                "name": "Pelt-pocalypse",
+                "description": "Obtain §a1.5x §7more §5pelts §7from §aTrevor §7in the §eMushroom Desert§7, hunt a new trapper mob, and purchase items from a new trapper shop.",
+                "minister": true
+              }
+            ],
+            "votes": 565014
+          },
+          {
+            "key": "dungeons",
+            "name": "Paul",
+            "perks": [
+              {
+                "name": "Benediction",
+                "description": "Blessings are §d25% §7stronger.",
+                "minister": true
+              }
+            ],
+            "votes": 60940
+          },
+          {
+            "key": "pets",
+            "name": "Diana",
+            "perks": [
+              {
+                "name": "Pet XP Buff",
+                "description": "Gain §d35% §7more pet XP.",
+                "minister": true
+              }
+            ],
+            "votes": 45227
+          },
+          {
+            "key": "economist",
+            "name": "Diaz",
+            "perks": [
+              {
+                "name": "Long Term Investment",
+                "description": "The §belected minister §7will appear as a candidate with §dall §7of their perks in the §anext election cycle§7.",
+                "minister": true
+              }
+            ],
+            "votes": 155362
+          }
+        ]
+      }
+    },
+    "current": {
+      "year": 376,
+      "candidates": [
+        {
+          "key": "events",
+          "name": "Foxy",
+          "perks": [
+            {
+              "name": "A Time for Giving",
+              "description": "Spawn §dParty Chests §7by killing mobs during the §6Spooky Festival §7and collect §bParty Gifts §7from §cJerry's Workshop§7.",
+              "minister": false
+            },
+            {
+              "name": "Chivalrous Carnival",
+              "description": "Schedules a §eCarnival §7in the hub, active throughout the §bentire year§7.",
+              "minister": true
+            },
+            {
+              "name": "Extra Event",
+              "description": "Schedules an extra §6Mining Fiesta §7event during the year.",
+              "minister": false
+            }
+          ]
+        },
+        {
+          "key": "dungeons",
+          "name": "Paul",
+          "perks": [
+            {
+              "name": "EZPZ",
+              "description": "Gain §e10 §7bonus score on dungeon runs.",
+              "minister": true
+            },
+            {
+              "name": "Benediction",
+              "description": "Blessings are §d25% §7stronger.",
+              "minister": false
+            }
+          ]
+        },
+        {
+          "key": "pets",
+          "name": "Diana",
+          "perks": [
+            {
+              "name": "Mythological Ritual",
+              "description": "Mayor Diana will sell the Griffin pet, which lets you find §2Mythological Creatures §7and tons of §eunique items§7.",
+              "minister": true
+            },
+            {
+              "name": "Pet XP Buff",
+              "description": "Gain §d35% §7more pet XP.",
+              "minister": false
+            }
+          ]
+        },
+        {
+          "key": "economist",
+          "name": "Diaz",
+          "perks": [
+            {
+              "name": "Long Term Investment",
+              "description": "The §belected minister §7will appear as a candidate with §dall §7of their perks in the §anext election cycle§7.",
+              "minister": true
+            }
+          ]
+        },
+        {
+          "key": "jerry",
+          "name": "Jerry",
+          "perks": [
+            {
+              "name": "Perkpocalypse",
+              "description": "Activates all perks of another mayor every 18 SkyBlock days (6 hours).",
+              "minister": false
+            },
+            {
+              "name": "Statspocalypse",
+              "description": "Increases most stats by §a10%§7.",
+              "minister": false
+            },
+            {
+              "name": "Jerrypocalypse",
+              "description": "Reveal hidden Jerries from logging, farming, mining and killing mobs.",
+              "minister": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "success": true,
+    "lastUpdated": 1728244989807,
+    "mayor": {
+      "key": "jerry",
+      "name": "Jerry",
+      "perks": [
+        {
+          "name": "Perkpocalypse",
+          "description": "Activates all perks of another mayor every 18 SkyBlock days (6 hours)."
+        },
+        {
+          "name": "Statspocalypse",
+          "description": "Increases most stats by §a10%§7."
+        },
+        {
+          "name": "Jerrypocalypse",
+          "description": "Reveal hidden Jerries from logging, farming, mining and killing mobs."
+        }
+      ],
+      "election": {
+        "year": 376,
+        "candidates": [
+          {
+            "key": "events",
+            "name": "Foxy",
+            "perks": [
+              {
+                "name": "A Time for Giving",
+                "description": "Spawn §dParty Chests §7by killing mobs during the §6Spooky Festival §7and collect §bParty Gifts §7from §cJerry's Workshop§7.",
+                "minister": false
+              },
+              {
+                "name": "Chivalrous Carnival",
+                "description": "Schedules a §eCarnival §7in the hub, active throughout the §bentire year§7.",
+                "minister": true
+              },
+              {
+                "name": "Extra Event",
+                "description": "Schedules an extra §6Mining Fiesta §7event during the year.",
+                "minister": false
+              }
+            ],
+            "votes": 37177
+          },
+          {
+            "key": "dungeons",
+            "name": "Paul",
+            "perks": [
+              {
+                "name": "EZPZ",
+                "description": "Gain §e10 §7bonus score on dungeon runs.",
+                "minister": true
+              },
+              {
+                "name": "Benediction",
+                "description": "Blessings are §d25% §7stronger.",
+                "minister": false
+              }
+            ],
+            "votes": 47360
+          },
+          {
+            "key": "pets",
+            "name": "Diana",
+            "perks": [
+              {
+                "name": "Mythological Ritual",
+                "description": "Mayor Diana will sell the Griffin pet, which lets you find §2Mythological Creatures §7and tons of §eunique items§7.",
+                "minister": true
+              },
+              {
+                "name": "Pet XP Buff",
+                "description": "Gain §d35% §7more pet XP.",
+                "minister": false
+              }
+            ],
+            "votes": 81818
+          },
+          {
+            "key": "economist",
+            "name": "Diaz",
+            "perks": [
+              {
+                "name": "Long Term Investment",
+                "description": "The §belected minister §7will appear as a candidate with §dall §7of their perks in the §anext election cycle§7.",
+                "minister": true
+              }
+            ],
+            "votes": 28078
+          },
+          {
+            "key": "jerry",
+            "name": "Jerry",
+            "perks": [
+              {
+                "name": "Perkpocalypse",
+                "description": "Activates all perks of another mayor every 18 SkyBlock days (6 hours).",
+                "minister": false
+              },
+              {
+                "name": "Statspocalypse",
+                "description": "Increases most stats by §a10%§7.",
+                "minister": false
+              },
+              {
+                "name": "Jerrypocalypse",
+                "description": "Reveal hidden Jerries from logging, farming, mining and killing mobs.",
+                "minister": false
+              }
+            ],
+            "votes": 1065156
+          }
+        ]
+      }
+    }
+  }
+]
