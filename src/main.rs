@@ -11,6 +11,7 @@ use std::fs::OpenOptions;
 use std::io::Write;
 use std::sync::Mutex;
 use std::io;
+use crate::skyblock::skyblock_to_datetime;
 
 fn init_logger() {
     let log_file_path = "server.log";
@@ -48,6 +49,10 @@ fn main() -> io::Result<()> {
     for event in calendar {
         println!("{:?}", event)
     }
+
+    println!("{:?}", skyblock_to_datetime(3,11, 377));
+    println!("{:?}", skyblock_to_datetime(1,12, 377));
+    println!("{:?}", skyblock_to_datetime(1,1, 378));
 
     init_logger();
     init_api()?;

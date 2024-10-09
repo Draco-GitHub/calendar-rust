@@ -52,9 +52,9 @@
   {
     "name": "Jerry Workshop Opens",
     "description": "",
-    "notify_at": "2024-10-10T04:49:00+01:00",
-    "start_time": "2024-10-10T04:51:00+01:00",
-    "end_time": "2024-10-10T14:51:00+01:00",
+    "notify_at": "2024-10-10T04:33:00+01:00",
+    "start_time": "2024-10-10T04:35:00+01:00",
+    "end_time": "2024-10-10T14:55:00+01:00",
     "repeat": true,
     "interval": 446400,
     "reminder": 120
