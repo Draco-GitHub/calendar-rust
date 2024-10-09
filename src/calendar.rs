@@ -7,13 +7,13 @@ use crate::skyblock::SkyblockEvent;
 struct Event {
     name: String,
     description: String,
+    notify_at: String,
     start_time: String,
     end_time: String,
     repeat: bool,
     interval: i32,
     reminder: i32
 }
-
 
 fn get_events() -> Vec<Event> {
     let file = File::open("events.json").unwrap();

@@ -2,6 +2,7 @@
   {
     "name": "Dark Auction",
     "description": "",
+    "notify_at": "2024-09-30T06:53:00+01:00",
     "start_time": "2024-09-30T06:55:00+01:00",
     "end_time": "2024-09-30T06:55:00+01:00",
     "repeat": true,
