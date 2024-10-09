@@ -2,9 +2,9 @@
   {
     "name": "Dark Auction",
     "description": "",
-    "notify_at": "2024-10-09T17:53:00+01:00",
-    "start_time": "2024-10-09T17:55:00+01:00",
-    "end_time": "2024-10-09T18:15:00+01:00",
+    "notify_at": "2024-10-09T18:53:00+01:00",
+    "start_time": "2024-10-09T18:55:00+01:00",
+    "end_time": "2024-10-09T19:15:00+01:00",
     "repeat": true,
     "interval": 3600,
     "reminder": 120
@@ -52,9 +52,9 @@
   {
     "name": "Jerry Workshop Opens",
     "description": "",
-    "notify_at": "2024-10-14T11:53:00+01:00",
-    "start_time": "2024-10-14T11:55:00+01:00",
-    "end_time": "2024-10-14T12:55:00+01:00",
+    "notify_at": "2024-10-10T04:49:00+01:00",
+    "start_time": "2024-10-10T04:51:00+01:00",
+    "end_time": "2024-10-10T14:51:00+01:00",
     "repeat": true,
     "interval": 446400,
     "reminder": 120
@@ -62,9 +62,9 @@
   {
     "name": "Season of Jerry",
     "description": "",
-    "notify_at": "2024-10-14T11:53:00+01:00",
-    "start_time": "2024-10-14T11:55:00+01:00",
-    "end_time": "2024-10-14T12:55:00+01:00",
+    "notify_at": "2024-10-10T12:12:00+01:00",
+    "start_time": "2024-10-10T12:15:00+01:00",
+    "end_time": "2024-10-10T13:15:00+01:00",
     "repeat": true,
     "interval": 446400,
     "reminder": 120
@@ -72,9 +72,9 @@
   {
     "name": "New Year Celebration",
     "description": "",
-    "notify_at": "2024-10-14T11:53:00+01:00",
-    "start_time": "2024-10-14T11:55:00+01:00",
-    "end_time": "2024-10-14T12:55:00+01:00",
+    "notify_at": "2024-10-10T13:53:00+01:00",
+    "start_time": "2024-10-10T13:55:00+01:00",
+    "end_time": "2024-10-14T14:55:00+01:00",
     "repeat": true,
     "interval": 446400,
     "reminder": 120
