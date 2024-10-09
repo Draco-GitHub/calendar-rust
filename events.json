@@ -2,11 +2,53 @@
   {
     "name": "Dark Auction",
     "description": "",
-    "notify_at": "2024-09-30T06:53:00+01:00",
-    "start_time": "2024-09-30T06:55:00+01:00",
-    "end_time": "2024-09-30T06:55:00+01:00",
+    "notify_at": "2024-10-09T17:53:00+01:00",
+    "start_time": "2024-10-09T17:55:00+01:00",
+    "end_time": "2024-10-09T18:15:00+01:00",
     "repeat": true,
     "interval": 3600,
-    "remind": 120
+    "reminder": 120
+  },
+  {
+    "name": "Jacob's Farming Contest",
+    "description": "",
+    "notify_at": "2024-10-09T18:13:00+01:00",
+    "start_time": "2024-10-09T18:15:00+01:00",
+    "end_time": "2024-10-09T18:35:00+01:00",
+    "repeat": true,
+    "interval": 3600,
+    "reminder": 120
+  },
+  {
+    "name": "Hoppity Start",
+    "description": "",
+    "notify_at": "2024-10-10T14:53:00+01:00",
+    "start_time": "2024-10-10T14:55:00+01:00",
+    "end_time": "2024-10-12T21:55:00+01:00",
+    "repeat": true,
+    "interval": 446400,
+    "reminder": 120
+  },
+  {
+    "name": "Oringo-1",
+    "description": "",
+    "notify_at": "2024-10-11T21:53:00+01:00",
+    "start_time": "2024-10-11T21:55:00+01:00",
+    "end_time": "2024-10-12T22:55:00+01:00",
+    "repeat": true,
+    "interval": 446400,
+    "reminder": 120
+  },
+  {
+    "name": "Oringo-2",
+    "description": "",
+    "notify_at": "2024-10-14T11:53:00+01:00",
+    "start_time": "2024-10-14T11:55:00+01:00",
+    "end_time": "2024-10-14T12:55:00+01:00",
+    "repeat": true,
+    "interval": 446400,
+    "reminder": 120
   }
+
+
 ]
