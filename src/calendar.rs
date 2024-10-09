@@ -7,12 +7,12 @@ use serde::{Deserialize, Serialize};
 pub struct Event {
     name: String,
     description: String,
-    notify_at: String,
-    start_time: String,
-    end_time: String,
+    notify_at: DateTime<FixedOffset>,
+    start_time: DateTime<FixedOffset>,
+    end_time: DateTime<FixedOffset>,
     repeat: bool,
     interval: i32,
-    reminder: i32
+    reminder: i8
 }
 
 fn get_events() -> Vec<Event> {
@@ -26,31 +26,22 @@ fn save_events(events: &Vec<Event>) {
     serde_json::to_writer(file, events).unwrap();
 }
 
-//returns a list of events from the start date to the end date
 pub fn get_calendar(start: DateTime<FixedOffset>, end:DateTime<FixedOffset>) -> Vec<Event> {
-    println!("running");
     let mut calendar = Vec::new();
     let events = get_events();
-    let time_interval = start.signed_duration_since(end).num_seconds();
-
-    // println!("{delta_seconds}");
-
 
     for event in events {
-        let last_event_start_date = DateTime::parse_from_rfc3339(&*event.start_time).expect("Failed to parse time");
-        let delta_seconds = (start.signed_duration_since(last_event_start_date).num_seconds()/event.interval as i64) * event.interval as i64;
-        let start_iter_date = last_event_start_date + Duration::seconds(delta_seconds);
-
-        let mut current_date = start_iter_date;
+        let delta_seconds = (start.signed_duration_since(event.start_time).num_seconds()/event.interval as i64) * event.interval as i64;
+        let mut current_date = event.start_time + Duration::seconds(delta_seconds);
         while current_date < end {
             current_date += Duration::seconds(event.interval as i64);
-
             let mut new_event = event.clone();
-            new_event.notify_at = (current_date - Duration::seconds(event.reminder as i64)).to_rfc2822();
-            new_event.start_time = current_date.to_rfc2822();
-            new_event.end_time = (current_date + Duration::seconds(event.interval as i64)).to_rfc2822();
+            new_event.notify_at = current_date - Duration::seconds(event.reminder as i64);
+            new_event.start_time = current_date;
+            new_event.end_time = current_date + Duration::seconds(event.interval as i64);
             calendar.push(new_event)
         }
     }
+    calendar.sort_by_key(|n| n.start_time);
     calendar
 }

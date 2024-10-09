@@ -46,13 +46,10 @@ fn main() -> io::Result<()> {
     let end  = DateTime::parse_from_rfc3339("2024-10-09T19:55:00+01:00").expect("Failed to parse time");
     let calendar = get_calendar(start, end);
 
-    for event in calendar {
-        println!("{:?}", event)
-    }
 
-    println!("{:?}", skyblock_to_datetime(3,11, 377));
-    println!("{:?}", skyblock_to_datetime(1,12, 377));
-    println!("{:?}", skyblock_to_datetime(1,1, 378));
+    for event in calendar {
+        println!("{:?}", event);
+    }
 
     init_logger();
     init_api()?;

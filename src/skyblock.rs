@@ -53,7 +53,7 @@ pub fn datetime_to_skyblock(real_date: DateTime<FixedOffset>) -> (i32, i32, i32)
     let day = (remaining_days % 31.0).floor() as i32 + 1;
     (day, month, year)
 }
-//
+
 // // fn get_current_date(day:CalendarEvent) -> CalendarEvent {
 // //     let now = Utc::now().with_timezone(&FixedOffset::east_opt(3600).unwrap());
 // //     let mut days_from_now = (now - day.datetime).num_minutes() as f64/20.0;
@@ -76,124 +76,5 @@ pub fn datetime_to_skyblock(real_date: DateTime<FixedOffset>) -> (i32, i32, i32)
 //     }
 //     Err("ElectionError").expect("Election not found")
 // }
-// fn get_events_from_day(day:i8, month:i8, year:i16, election: Election) -> Vec<SkyblockEvent> {
-//     //instead of storing the events in if statements, do it like google
-//     //so that it can be later expanded to other events
-//     //make it so that events are stored in the date they were started and have custom recurring times
-//
-//     let election:Election = get_election(year).unwrap();
-//     let datetime = skyblock_to_datetime(day, month, year);
-//     let day_of_year:i16 = (day + month * 31) as i16;
-//     let mut events:Vec<SkyblockEvent>  = Vec::new();
-//
-//     if day_of_year % 3 == 0 {
-//         events.push(SkyblockEvent { day, month, year, day_of_year, name: "Jacob's Farming Contest".to_string(), start:datetime, end:datetime + Duration::minutes(20)})
-//     }
-//     if day_of_year % 3 == 1 {
-//         events.push(SkyblockEvent { day, month, year, day_of_year , name: "Dark Auction".to_string(), start:datetime, end:datetime + Duration::minutes(20)})
-//     }
-//
-//     if day == 1 {
-//         if (election.perks.contains(&"Fishing Festival".to_string())) {
-//             if ((1..=3).contains(&month) && year == election.year) || (5..=12).contains(&month) {
-//                 events.push(SkyblockEvent { day, month, year, day_of_year, name:"Fishing Festival".to_string(), start:datetime, end:datetime+Duration::hours(1)})
-//             }
-//         }
-//         if month == 1 {
-//             events.push(SkyblockEvent { day, month, year, day_of_year, name: "Hoppity Start".to_string(), start:datetime, end:datetime + Duration::hours(31)})
-//         }
-//         if month == 4 || month == 10 {
-//             events.push(SkyblockEvent { day, month, year, day_of_year, name: "Traveling Zoo".to_string(), start:datetime, end:datetime + Duration::hours(1)})
-//         }
-//         if month == 12 {
-//             events.push(SkyblockEvent { day, month, year, day_of_year, name: "Jerry Workshop Opens".to_string(), start:datetime, end:datetime + Duration::minutes(620)})
-//         }
-//     }
-//
-//     if month == 12 {
-//         if day == 25 {
-//             events.push(SkyblockEvent { day, month, year, day_of_year, name:"Season of Jerry".to_string(), start:datetime, end:datetime + Duration::minutes(620)})
-//         }
-//         if day == 29 {
-//             events.push(SkyblockEvent { day, month, year, day_of_year, name:"New Year Celebration".to_string(), start:datetime, end:datetime + Duration::minutes(620)})
-//         }
-//     }
-//
-//     if month == 8 && day == 29 {
-//             events.push(SkyblockEvent { day, month, year, day_of_year, name: "Spooky Festival".to_string(), start:datetime, end:datetime + Duration::hours(1)})
-//     }
-//
-//     events
-// }
-//
-// pub async fn get_calendar() -> io::Result<Vec<SkyblockEvent>> {
-//
-//     let mut file = File::open("calendar2.json")?;
-//     let mut contents = String::new();
-//     file.read_to_string(&mut contents).expect("Unable to read contents");
-//     let json: Vec<SkyblockEvent> = serde_json::from_str(&contents)?;
-//
-//     let last_day = &json[json.len()-1];
-//     let now = Utc::now().with_timezone(&FixedOffset::east_opt(3600).unwrap());
-//     let mut days_from_now = (now - last_day.start).num_minutes() as f64/20.0;
-//
-//     let days_from_now = if days_from_now < 0.0 {days_from_now.floor()} else {days_from_now.ceil()};
-//
-//     println!("{days_from_now}");
-//
-//     let client = Client::new();
-//
-//     let response = client
-//         .get("https://api.hypixel.net/v2/resources/skyblock/election")
-//         .send()
-//         .await
-//         .map_err(|e| io::Error::new(ErrorKind::Other, e))?
-//         .json::<Value>()
-//         .await
-//         .map_err(|e| io::Error::new(ErrorKind::Other, e))?;
-//
-//     let mut calendar: Vec<SkyblockEvent> = Vec::new();
-//
-//
-//     Ok(calendar)
-// }
-//
-//
-// pub async fn notify_before_event() -> io::Result<()> {
-//     loop {
-//         let calendar = get_calendar().await?;
-//
-//         let local_time: DateTime<Local> = Local::now();
-//         let now: DateTime<FixedOffset> = local_time.with_timezone(local_time.offset());
-//         let (year, month, day) = datetime_to_skyblock(now);
-//
-//         let current_day_of_year = (month - 1) * 31 + day;
-//
-//         if current_day_of_year < calendar.len() as i32 {
-//             let next_day = &calendar[(current_day_of_year % calendar.len() as i32) as usize];
-//             let next_event_datetime = skyblock_to_datetime(year, month, day+1);
-//             let notify_time = next_event_datetime - Duration::minutes(2);
-//             let seconds_till_event = notify_time.signed_duration_since(now).num_seconds();
-//             println!("{seconds_till_event}");
-//             if seconds_till_event < 0 {
-//                 println!("retrying");
-//                 continue
-//             }
-//             println!("Notifying");
-//
-//             // Notification::new()
-//             //     .summary("Skyblock Event Reminder")
-//             //     .body(&format!("The event(s) '{}' is starting in 2 minutes!", next_day.events.join(", ")))
-//             //     .show()
-//             //     .unwrap();
-//
-//         } else {
-//             println!("There are no more days in the calendar.");
-//         }
-//         tokio::time::sleep(time::Duration::from_secs(1200)).await;
-//     }
-// }
-//
-//
-//
-//
+
+
