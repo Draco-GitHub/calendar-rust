@@ -48,6 +48,36 @@
     "repeat": true,
     "interval": 446400,
     "reminder": 120
+  },
+  {
+    "name": "Jerry Workshop Opens",
+    "description": "",
+    "notify_at": "2024-10-14T11:53:00+01:00",
+    "start_time": "2024-10-14T11:55:00+01:00",
+    "end_time": "2024-10-14T12:55:00+01:00",
+    "repeat": true,
+    "interval": 446400,
+    "reminder": 120
+  },
+  {
+    "name": "Season of Jerry",
+    "description": "",
+    "notify_at": "2024-10-14T11:53:00+01:00",
+    "start_time": "2024-10-14T11:55:00+01:00",
+    "end_time": "2024-10-14T12:55:00+01:00",
+    "repeat": true,
+    "interval": 446400,
+    "reminder": 120
+  },
+  {
+    "name": "New Year Celebration",
+    "description": "",
+    "notify_at": "2024-10-14T11:53:00+01:00",
+    "start_time": "2024-10-14T11:55:00+01:00",
+    "end_time": "2024-10-14T12:55:00+01:00",
+    "repeat": true,
+    "interval": 446400,
+    "reminder": 120
   }
 
 
