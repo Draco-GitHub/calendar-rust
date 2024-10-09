@@ -26,3 +26,7 @@ fn save_events(events: &Vec<Event>) {
     serde_json::to_writer(file, events).unwrap();
 }
 
+fn get_calendar() -> Vec<Event> {
+    let mut calendar = Vec::new();
+    calendar
+}
