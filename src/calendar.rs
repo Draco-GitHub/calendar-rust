@@ -1,4 +1,5 @@
 use std::fs::File;
+use chrono::{DateTime, FixedOffset, Local};
 use serde::{Deserialize, Serialize};
 use crate::skyblock::SkyblockEvent;
 
@@ -27,13 +28,9 @@ fn save_events(events: &Vec<Event>) {
 }
 
 
-enum CalendarMode {
-    Day,
-    Week,
-    Month,
-    Year
-}
-fn get_calendar(mode:CalendarMode) -> Vec<Event> {
+fn get_calendar(start: DateTime<FixedOffset>, end:DateTime<FixedOffset>) -> Vec<Event> {
+    let local_time: DateTime<Local> = Local::now();
+    let now: DateTime<FixedOffset> = local_time.with_timezone(local_time.offset());
     let mut calendar = Vec::new();
     let events = get_events();
     for event in events {
