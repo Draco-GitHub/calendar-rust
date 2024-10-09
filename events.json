@@ -1,0 +1,11 @@
+[
+  {
+    "name": "Dark Auction",
+    "description": "",
+    "start_time": "2024-09-30T06:55:00+01:00",
+    "end_time": "2024-09-30T06:55:00+01:00",
+    "repeat": true,
+    "interval": 1200,
+    "remind": 120
+  }
+]

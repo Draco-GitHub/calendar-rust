@@ -1,0 +1,23 @@
+{
+  "375": {
+    "mayor": "Finnegan",
+    "minister": "Marina",
+    "perks": [
+      "Pest Eradicator",
+      "GOATed",
+      "Pelt-pocalypse",
+      "Fishing Festival"
+    ],
+    "year": 375
+  },
+  "376": {
+    "mayor": "jerry",
+    "minister": "",
+    "perks": [
+      "Perkpocalypse",
+      "Statspocalypse",
+      "Jerrypocalypse"
+    ],
+    "year": 376
+  }
+}

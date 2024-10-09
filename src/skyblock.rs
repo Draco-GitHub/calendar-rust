@@ -64,7 +64,24 @@ pub fn datetime_to_skyblock(real_date: DateTime<FixedOffset>) -> (i8, i8, i16) {
 //     fill_events_vec(new_days, new_month, new_year, now)
 // }
 
+fn get_election(year:i16) -> Result<Election, io::Error>{
+    let mut file = File::open("elections.json")?;
+    let mut contents = String::new();
+    file.read_to_string(&mut contents).expect("Unable to read contents");
+    let json:Vec<Election>= serde_json::from_str(&contents)?;
+    for election in json {
+        if election.year == year {
+            return Ok(election);
+        }
+    }
+    Err("ElectionError").expect("Election not found")
+}
 fn get_events_from_day(day:i8, month:i8, year:i16, election: Election) -> Vec<SkyblockEvent> {
+    //instead of storing the events in if statements, do it like google
+    //so that it can be later expanded to other events
+    //make it so that events are stored in the date they were started and have custom recurring times
+    
+    let election:Election = get_election(year).unwrap();
     let datetime = skyblock_to_datetime(day, month, year);
     let day_of_year:i16 = (day + month * 31) as i16;
     let mut events:Vec<SkyblockEvent>  = Vec::new();
