@@ -42,10 +42,13 @@ fn main() -> io::Result<()> {
     //     }
     // });
 
-    let start = DateTime::parse_from_rfc3339("2024-10-09T17:02:00+01:00").expect("Failed to parse time");
-    let end  = DateTime::parse_from_rfc3339("2024-10-09T19:55:00+01:00").expect("Failed to parse time");
-    let calendar = get_calendar(start, end);
+    // let start = DateTime::parse_from_rfc3339("2024-10-10T13:00:00+01:00").expect("Failed to parse time");
+    // let end  = DateTime::parse_from_rfc3339("2024-10-17T12:55:00+01:00").expect("Failed to parse time");
+    // let calendar = get_calendar(start, end);
 
+    let start = skyblock_to_datetime(1,1,1);
+    let end  = skyblock_to_datetime(1,1,1);
+    let calendar = get_calendar(start, end);
 
     for event in calendar {
         println!("{:?}", event);
