@@ -1,42 +1,46 @@
 {
-  "Fishing Festival": {
-    "name": "New Year Celebration",
-    "description": "",
-    "notify_at": "2024-10-10T13:53:00+01:00",
-    "start_time": "2024-10-10T13:55:00+01:00",
-    "end_time": "2024-10-14T14:55:00+01:00",
-    "repeat": true,
-    "interval": 446400,
-    "reminder": 120
-  },
-  "Mining Fiesta": {
-    "name": "New Year Celebration",
-    "description": "",
-    "notify_at": "2024-10-10T13:53:00+01:00",
-    "start_time": "2024-10-10T13:55:00+01:00",
-    "end_time": "2024-10-14T14:55:00+01:00",
-    "repeat": true,
-    "interval": 446400,
-    "reminder": 120
-  },
-  "Mythological Ritual": {
-    "name": "New Year Celebration",
-    "description": "",
-    "notify_at": "2024-10-10T13:53:00+01:00",
-    "start_time": "2024-10-10T13:55:00+01:00",
-    "end_time": "2024-10-14T14:55:00+01:00",
-    "repeat": true,
-    "interval": 446400,
-    "reminder": 120
-  },
-  "Chivalrous Carnival": {
-    "name": "New Year Celebration",
-    "description": "",
-    "notify_at": "2024-10-10T13:53:00+01:00",
-    "start_time": "2024-10-10T13:55:00+01:00",
-    "end_time": "2024-10-14T14:55:00+01:00",
-    "repeat": true,
-    "interval": 446400,
-    "reminder": 120
-  }
+  "Fishing Festival": [
+    {
+      "name": "Fishing Festival",
+      "description": "",
+      "notify_at": "2024-10-10T13:53:00+01:00",
+      "start_time": "2024-10-10T13:55:00+01:00",
+      "end_time": "2024-10-14T14:55:00+01:00",
+      "repeat": true,
+      "interval": 37200,
+      "reminder": 120
+    }],
+  "Mining Fiesta": [
+    {
+      "name": "New Year Celebration",
+      "description": "",
+      "notify_at": "2024-10-10T13:53:00+01:00",
+      "start_time": "2024-10-10T13:55:00+01:00",
+      "end_time": "2024-10-14T14:55:00+01:00",
+      "repeat": true,
+      "interval": 446400,
+      "reminder": 120
+    }],
+  "Mythological Ritual": [
+    {
+      "name": "New Year Celebration",
+      "description": "",
+      "notify_at": "2024-10-10T13:53:00+01:00",
+      "start_time": "2024-10-10T13:55:00+01:00",
+      "end_time": "2024-10-14T14:55:00+01:00",
+      "repeat": true,
+      "interval": 446400,
+      "reminder": 120
+    }],
+  "Chivalrous Carnival": [
+    {
+      "name": "New Year Celebration",
+      "description": "",
+      "notify_at": "2024-10-10T13:53:00+01:00",
+      "start_time": "2024-10-10T13:55:00+01:00",
+      "end_time": "2024-10-14T14:55:00+01:00",
+      "repeat": true,
+      "interval": 446400,
+      "reminder": 120
+    }]
 }

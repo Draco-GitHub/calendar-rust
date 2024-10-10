@@ -1,52 +1,106 @@
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::BufReader;
-use chrono::{DateTime, Duration, FixedOffset, Local};
+use std::path::Path;
+use chrono::{Date, DateTime, Duration, FixedOffset, Local, Utc};
 use serde::{Deserialize, Serialize};
 use serde::de::{DeserializeOwned, Error};
+use uuid::Uuid;
 use crate::skyblock::get_skyblock_events;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct Event {
-    pub(crate) name: String,
-    pub(crate) description: String,
-    pub(crate) notify_at: DateTime<FixedOffset>,
-    pub(crate) start_time: DateTime<FixedOffset>,
-    pub(crate) end_time: DateTime<FixedOffset>,
-    pub(crate) duration: i32,
-    pub(crate) repeat: bool,
-    pub(crate) interval: i32,
-    pub(crate) reminder: i8
+pub(crate) struct Event {
+    id: Uuid,
+    title: String,
+    description: Option<String>,
+    notify_at: DateTime<Utc>,
+    start_time: DateTime<Utc>,
+    end_time: DateTime<Utc>,
+    duration: i64,
+    recurrence: Option<i64>
 }
 
-pub fn get_events<T:DeserializeOwned>(path:&str) -> Result<T, serde_json::Error> {
-    let file = File::open(path).map_err(|e| serde_json::Error::custom(format!("File error: {}", e)))?;
-    let reader = BufReader::new(file);
-    let data = serde_json::from_reader(reader)?;
-    Ok(data)
-}
-
-pub fn save_events(events: &Vec<Event>, path: &str) {
-    let file = File::create(path).unwrap();
-    serde_json::to_writer(file, events).unwrap();
-}
-
-pub fn get_calendar(start: DateTime<FixedOffset>, end:DateTime<FixedOffset>) -> Vec<Event> {
-    let mut calendar = Vec::new();
-    calendar.append(get_skyblock_events(start, end).as_mut());
-    let events = get_events("events.json");
-
-    for event in events {
-        let delta_seconds = (start.signed_duration_since(event.start_time).num_seconds()/event.interval as i64) * event.interval as i64;
-        let mut current_date = event.start_time + Duration::seconds(delta_seconds);
-        while current_date < end {
-            current_date += Duration::seconds(event.interval as i64);
-            let mut new_event = event.clone();
-            new_event.notify_at = current_date - Duration::seconds(event.reminder as i64);
-            new_event.start_time = current_date;
-            new_event.end_time = current_date + Duration::seconds(new_event.duration as i64);
-            calendar.push(new_event)
-        }
+impl Event {
+    fn new(title: &str, description:Option<String>, notify_at:DateTime<Utc>, start_time: DateTime<Utc>, end_time: DateTime<Utc>, duration:i64, recurrence:Option<i64>) -> Self {
+        Event { id: Uuid::new_v4(), title: title.to_string(), description, notify_at, start_time, end_time, duration, recurrence }
     }
-    calendar.sort_by_key(|n| n.start_time);
-    calendar
+
+    fn modulo_is_zero(&self, date:DateTime<Utc>) -> bool {
+        if (self.start_time.signed_duration_since(date).num_seconds() % self.recurrence.unwrap()) == 0 {
+            return true
+        }
+        false
+    }
+
+    fn is_upcoming(&self, date: DateTime<Utc>) -> bool {
+        self.start_time > date
+    }
+
+    fn next_occurrence(&self, date:DateTime<Utc>) -> Option<DateTime<Utc>> {
+        if self.recurrence.is_some() {
+            let mut occurrence_start = self.start_time;
+            while occurrence_start <= date {
+                occurrence_start = occurrence_start + Duration::seconds(self.recurrence?);
+            }
+            return Some(occurrence_start)
+        }
+        None
+    }
 }
+struct User {
+    id:Uuid,
+    name: String,
+    events: HashMap<Uuid, Event>
+}
+impl User {
+    fn new(name:String) -> Self {
+        User { id: Uuid::new_v4(), name, events: HashMap::new() }
+    }
+
+    fn add_event(&mut self, event: Event) {
+        self.events.insert(event.id, event);
+    }
+
+    fn get_event(&self, event_id: Uuid) -> Option<&Event> {
+        self.events.get(&event_id)
+    }
+
+    fn list_events(&self) -> Vec<&Event> {
+        self.events.values().collect()
+    }
+
+    fn find_events_at(&self, time: DateTime<Utc>) -> Vec<&Event> {
+        self.events.values().filter(|event| event.is_happening_at(time)).collect()
+    }
+
+    fn find_upcoming_events(&self, date: DateTime<Utc>) -> Vec<&Event> {
+        let mut upcoming_events: Vec<&Event> = self.events.values()
+            .filter(|event| event.is_upcoming(date))
+            .collect();
+
+        upcoming_events.sort_by_key(|event| event.start_time);
+        upcoming_events
+    }
+
+}
+
+struct CalendarDataBase {
+    users: HashMap<Uuid, User>
+}
+impl CalendarDataBase {
+    fn new() -> Self {
+        CalendarDataBase {users: HashMap::new()}
+    }
+    fn add_user(&mut self, user: User) {
+        self.users.insert(user.id, user);
+    }
+    fn get_user(&self, user_id:Uuid) -> Option<&User> {
+        self.users.get(&user_id)
+    }
+    fn list_users(&self) -> Vec<&User> {
+        self.users.values().collect()
+    }
+}
+
+
+

@@ -2,6 +2,7 @@ mod api;
 mod request_handler;
 mod calendar;
 mod skyblock;
+mod helpers;
 
 use crate::calendar::get_calendar;
 use api::init_api;
@@ -46,8 +47,8 @@ fn main() -> io::Result<()> {
     // let end  = DateTime::parse_from_rfc3339("2024-10-17T12:55:00+01:00").expect("Failed to parse time");
     // let calendar = get_calendar(start, end);
 
-    let start = skyblock_to_datetime(1,1,1);
-    let end  = skyblock_to_datetime(1,1,1);
+    let start = skyblock_to_datetime(1,12,376);
+    let end  = skyblock_to_datetime(1,1,376);
     let calendar = get_calendar(start, end);
 
     for event in calendar {
