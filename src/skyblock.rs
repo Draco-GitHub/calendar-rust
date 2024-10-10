@@ -1,14 +1,8 @@
 use std::fs::File;
-use std::{io, time};
-use std::collections::HashMap;
-use std::error::Error;
-use std::io::{ErrorKind, Read};
-use chrono::{DateTime, Duration, Local, Month, Timelike, Utc};
-use reqwest::Client;
+use std::{io};
+use std::io::{Read};
+use chrono::{DateTime, Duration, Timelike, Utc};
 use serde::{Deserialize, Serialize};
-use serde_json::Value;
-use crate::calendar::{get_events, Event};
-use crate::helpers::read_json_from_file;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 struct Election {
