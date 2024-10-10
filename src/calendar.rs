@@ -1,6 +1,8 @@
 use std::fs::File;
+use std::io::BufReader;
 use chrono::{DateTime, Duration, FixedOffset, Local};
 use serde::{Deserialize, Serialize};
+use serde::de::{DeserializeOwned, Error};
 use crate::skyblock::get_skyblock_events;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -16,10 +18,11 @@ pub struct Event {
     pub(crate) reminder: i8
 }
 
-pub fn get_events(path: &str) -> Vec<Event> {
-    let file = File::open(path).unwrap();
-    let events: Vec<Event> = serde_json::from_reader(file).unwrap();
-    events
+pub fn get_events<T:DeserializeOwned>(path:&str) -> Result<T, serde_json::Error> {
+    let file = File::open(path).map_err(|e| serde_json::Error::custom(format!("File error: {}", e)))?;
+    let reader = BufReader::new(file);
+    let data = serde_json::from_reader(reader)?;
+    Ok(data)
 }
 
 pub fn save_events(events: &Vec<Event>, path: &str) {

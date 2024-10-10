@@ -1,12 +1,13 @@
 use std::fs::File;
 use std::{io, time};
+use std::collections::HashMap;
 use std::error::Error;
 use std::io::{ErrorKind, Read};
 use chrono::{DateTime, Duration, FixedOffset, Local, Timelike, Utc};
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
-use crate::calendar::Event;
+use crate::calendar::{get_events, Event};
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 struct Election {
@@ -65,10 +66,19 @@ fn get_next_valid_time(start: DateTime<FixedOffset>, end: DateTime<FixedOffset>)
 
 pub fn get_skyblock_events(start: DateTime<FixedOffset>, end:DateTime<FixedOffset>) -> Vec<Event> {
     let mut calendar = Vec::new();
-    let events = crate::calendar::get_events("skyblock_events.json");
+    let mut events:Vec<Event> = get_events("skyblock_events.json")?;
     let mut next_valid_skyblock_day = get_next_valid_time(start, end).unwrap();
 
     while next_valid_skyblock_day < end {
+        let skyblock_date = datetime_to_skyblock(next_valid_skyblock_day);
+        let election = get_election(skyblock_date.2).unwrap();
+        let mayor_events: HashMap<String, Vec<Event>> = get_events("skyblock_mayor_events.json")?;
+        let mayor_wanted_perks = ["Fishing Festival", "Mining Fiesta", "Mythological Ritual", "Chivalrous Carnival"];
+        for perk in election.perks {
+            if mayor_wanted_perks.contains(&perk.as_str()) {
+                events.append(&mut mayor_events[perk]);
+            }
+        }
         for event in &events {
             if (event.start_time.signed_duration_since(next_valid_skyblock_day).num_seconds() % event.interval as i64) == 0 {
                 let mut new_event = event.clone();
