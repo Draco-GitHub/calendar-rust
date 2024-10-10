@@ -16,7 +16,13 @@ struct SkyblockDay {
     day: i32,
     month: i32,
     year: i32,
-    events: Vec<String>
+    events: Vec<SkyblockEvent>
+}
+#[derive(Debug, Serialize, Deserialize, Clone)]
+struct SkyblockEvent {
+    title: String,
+    duration: i32,
+    interval: i32,
 }
 impl SkyblockDay {
     fn new( day: i32, month: i32, year: i32) -> Self {
@@ -44,7 +50,7 @@ impl SkyblockDay {
         SkyblockDay::new(day, month, year)
     }
 
-    fn get_events(day:i32, month:i32, year:i32) -> Vec<String> {
+    fn get_events(day:i32, month:i32, year:i32) -> Vec<SkyblockEvent> {
         let events = Vec::new();
         events
     }
