@@ -311,5 +311,126 @@
         ]
       }
     }
+  },
+  "377" : {
+    "success": true,
+    "lastUpdated": 1728765519047,
+    "mayor": {
+      "key": "pets",
+      "name": "Diana",
+      "perks": [
+        {
+          "name": "Mythological Ritual",
+          "description": "Mayor Diana will sell the Griffin pet, which lets you find §2Mythological Creatures §7and tons of §eunique items§7."
+        },
+        {
+          "name": "Pet XP Buff",
+          "description": "Gain §d35% §7more pet XP."
+        },
+        {
+          "name": "Sharing is Caring",
+          "description": "Unlocks §a2 §7more §6Exp Share §7slots in your pets menu and increases the §6Exp Share §7rate by §a+10%§7!"
+        }
+      ],
+      "minister": {
+        "key": "slayer",
+        "name": "Aatrox",
+        "perk": {
+          "name": "Slayer XP Buff",
+          "description": "Earn §d25% §7more Slayer XP.",
+          "minister": true
+        }
+      },
+      "election": {
+        "year": 377,
+        "candidates": [
+          {
+            "key": "pets",
+            "name": "Diana",
+            "perks": [
+              {
+                "name": "Mythological Ritual",
+                "description": "Mayor Diana will sell the Griffin pet, which lets you find §2Mythological Creatures §7and tons of §eunique items§7.",
+                "minister": true
+              },
+              {
+                "name": "Pet XP Buff",
+                "description": "Gain §d35% §7more pet XP.",
+                "minister": false
+              },
+              {
+                "name": "Sharing is Caring",
+                "description": "Unlocks §a2 §7more §6Exp Share §7slots in your pets menu and increases the §6Exp Share §7rate by §a+10%§7!",
+                "minister": false
+              }
+            ],
+            "votes": 603850
+          },
+          {
+            "key": "mining",
+            "name": "Cole",
+            "perks": [
+              {
+                "name": "Prospection",
+                "description": "Mining minions work §a25% §7faster.",
+                "minister": true
+              }
+            ],
+            "votes": 21220
+          },
+          {
+            "key": "economist",
+            "name": "Diaz",
+            "perks": [
+              {
+                "name": "Shopping Spree",
+                "description": "Increase daily NPC buy limits by §e10x§7.",
+                "minister": true
+              },
+              {
+                "name": "Long Term Investment",
+                "description": "The §belected minister §7will appear as a candidate with §dall §7of their perks in the §anext election cycle§7.",
+                "minister": false
+              }
+            ],
+            "votes": 46930
+          },
+          {
+            "key": "events",
+            "name": "Foxy",
+            "perks": [
+              {
+                "name": "A Time for Giving",
+                "description": "Spawn §dParty Chests §7by killing mobs during the §6Spooky Festival §7and collect §bParty Gifts §7from §cJerry's Workshop§7.",
+                "minister": false
+              },
+              {
+                "name": "Chivalrous Carnival",
+                "description": "Schedules a §eCarnival §7in the hub, active throughout the §bentire year§7.",
+                "minister": false
+              },
+              {
+                "name": "Extra Event",
+                "description": "Schedules an extra §6Spooky Festival §7event during the year.",
+                "minister": true
+              }
+            ],
+            "votes": 118144
+          },
+          {
+            "key": "slayer",
+            "name": "Aatrox",
+            "perks": [
+              {
+                "name": "Slayer XP Buff",
+                "description": "Earn §d25% §7more Slayer XP.",
+                "minister": true
+              }
+            ],
+            "votes": 160218
+          }
+        ]
+      }
+    }
   }
 }
