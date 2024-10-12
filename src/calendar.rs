@@ -20,18 +20,10 @@ impl Event {
     fn new(title: &str, description:Option<String>, notify_at:DateTime<Utc>, start_time: DateTime<Utc>, end_time: DateTime<Utc>, duration:i64, recurrence:Option<i64>) -> Self {
         Event { id: Uuid::new_v4(), title: title.to_string(), description, notify_at, start_time, end_time, duration, recurrence }
     }
-
-    fn modulo_is_zero(&self, date:DateTime<Utc>) -> bool {
-        if (self.start_time.signed_duration_since(date).num_seconds() % self.recurrence.unwrap()) == 0 {
-            return true
-        }
-        false
-    }
-
+    fn modulo(&self, date:DateTime<Utc>) -> i64 { self.start_time.signed_duration_since(date).num_seconds() % self.recurrence.unwrap() }
     fn is_upcoming(&self, date: DateTime<Utc>) -> bool {
         self.start_time > date
     }
-
     fn next_occurrence(&self, date:DateTime<Utc>) -> Option<DateTime<Utc>> {
         if self.recurrence.is_some() {
             let mut occurrence_start = self.start_time;

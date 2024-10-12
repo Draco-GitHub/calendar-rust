@@ -3,6 +3,8 @@ use std::{io};
 use std::io::{Read};
 use chrono::{DateTime, Duration, Timelike, Utc};
 use serde::{Deserialize, Serialize};
+use serde_json::Value;
+use crate::helpers::read_json_from_file;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 struct Election {
@@ -10,7 +12,27 @@ struct Election {
     minister: String,
     perks: Vec<String>,
     year: i32,
+    start: DateTime<Utc>,
+    end: DateTime<Utc>
 }
+
+impl Election {
+    fn new(mayor: String, minister: String, perks: Vec<String>, year: i32, start:DateTime<Utc>, end:DateTime<Utc>) -> Election {
+        Election { mayor, minister, perks, year, start, end }
+    }
+    async fn get_ongoing_election(&self) -> Election {
+        let request = reqwest::get("https://api.hypixel.net/v2/resources/skyblock/election").await?.json::<Value>().await?;
+        let mayor = request.get("mayor");
+        let name = mayor.unwrap().get("name");
+        let mayor_perks = mayor.unwrap().get("perks");
+        let year = request.get("year");
+
+        Election::new(request.get("mayor"), "".to_string(), vec![], 0, Default::default(), Default::default())
+    }
+
+}
+
+
 #[derive(Debug, Serialize, Deserialize, Clone)]
 struct SkyblockDay {
     day: i32,
@@ -66,6 +88,16 @@ impl SkyblockDay {
         date.checked_add_signed(Duration::hours(1)).unwrap().with_minute(15).unwrap().with_second(0).unwrap()
     }
 
+    fn get_election(date: &SkyblockDay) -> Option<Election> {
+        let elections:Vec<Election> = read_json_from_file("election.json").expect("Failed to read json");
+        for election in elections {
+            if election.year == date.year {
+                return Some(election);
+            }
+        }
+        None
+    }
+
 }
 
 // pub fn get_skyblock_events(start: DateTime<Utc>, end:DateTime<Utc>) -> Vec<Event> {
@@ -107,17 +139,6 @@ impl SkyblockDay {
 // }
 
 
-fn get_election(year:i32) -> Result<Election, io::Error>{
-    let mut file = File::open("elections.json")?;
-    let mut contents = String::new();
-    file.read_to_string(&mut contents).expect("Unable to read contents");
-    let json:Vec<Election>= serde_json::from_str(&contents)?;
-    for election in json {
-        if election.year == year {
-            return Ok(election);
-        }
-    }
-    Err("ElectionError").expect("Election not found")
-}
+
 
 
