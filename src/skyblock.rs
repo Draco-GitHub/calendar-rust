@@ -1,7 +1,5 @@
-use std::fs::File;
-use std::{io};
-use std::io::{Read};
 use chrono::{DateTime, Duration, Timelike, Utc};
+use reqwest::Error;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use crate::helpers::read_json_from_file;
@@ -20,16 +18,19 @@ impl Election {
     fn new(mayor: String, minister: String, perks: Vec<String>, year: i32, start:DateTime<Utc>, end:DateTime<Utc>) -> Election {
         Election { mayor, minister, perks, year, start, end }
     }
-    async fn get_ongoing_election(&self) -> Election {
-        let request = reqwest::get("https://api.hypixel.net/v2/resources/skyblock/election").await?.json::<Value>().await?;
-        let mayor = request.get("mayor");
-        let name = mayor.unwrap().get("name");
-        let mayor_perks = mayor.unwrap().get("perks");
-        let year = request.get("year");
-
-        Election::new(request.get("mayor"), "".to_string(), vec![], 0, Default::default(), Default::default())
+    async fn get_ongoing_election() -> Result<Election, Error> {
+        let response = reqwest::get("https://api.hypixel.net/v2/resources/skyblock/election").await?.json::<Value>().await?;
+        let mayor = response.get("mayor").and_then(|m| m.get("name").map(|n| n.as_str())).ok_or_else(|| "Mayor name not found")?.to_string();
+        let minister = response.get("mayor").and_then(|m| m.get("minister").and_then(|mi| mi.get("name").map(|n| n.as_str()))).ok_or_else(|| "Minister name not found")?.to_string();
+        let mayor_perks = response.get("mayor").and_then(|m| m.get("perks").map(|p| p.as_array())).ok_or_else(|| "Mayor perks not found")?;
+        let mut perks = mayor_perks.iter().filter_map(|perk| perk.get("name").map(|name| name.as_str().unwrap_or_default().to_string())).collect::<Vec<_>>();
+        let minister_perks = response.get("mayor").and_then(|m| m.get("minister").and_then(|mi| mi.get("perks").map(|p| p.as_array()))).unwrap_or(&vec![]); // fallback to empty array
+        perks.extend(minister_perks.iter().filter_map(|perk| perk.get("name").map(|name| name.as_str().unwrap_or_default().to_string())));
+        let year = response.get("year").and_then(|y| y.as_i64()).ok_or_else(|| "Year not found")? as i32;
+        let start = SkyblockDay::convert_to_date(27, 5, year);
+        let end = SkyblockDay::convert_to_date(25, 5, year + 1);
+        Ok(Election::new(mayor, minister, perks, year, start, end))
     }
-
 }
 
 
@@ -52,9 +53,9 @@ impl SkyblockDay {
         SkyblockDay { day, month, year, events}
     }
 
-    fn convert_to_date(&self) -> DateTime<Utc> {
+    fn convert_to_date(day:i32, month:i32, year:i32) -> DateTime<Utc> {
         let year_start: DateTime<Utc> = "2024-09-30 05:55:00".parse().expect("Failed to parse datetime");
-        let total_days = ((self.year - 376) * 12 * 31) + ((self.month - 1) * 31) + (self.day - 1);
+        let total_days = ((year - 376) * 12 * 31) + ((month - 1) * 31) + (day - 1);
         let total_real_minutes = total_days * 20;
         let real_duration = Duration::minutes(total_real_minutes.into());
         year_start + real_duration
@@ -73,7 +74,13 @@ impl SkyblockDay {
     }
 
     fn get_events(day:i32, month:i32, year:i32) -> Vec<SkyblockEvent> {
-        let events = Vec::new();
+        let date = Self::convert_to_date(day, month, year);
+        let election: Election = Self::get_election(year).expect("Failed to get election");
+        let mut events = Vec::new();
+        if date >= election.start && date <= election.end {
+            events.extend(election.perks)
+
+        }
         events
     }
 
@@ -88,10 +95,10 @@ impl SkyblockDay {
         date.checked_add_signed(Duration::hours(1)).unwrap().with_minute(15).unwrap().with_second(0).unwrap()
     }
 
-    fn get_election(date: &SkyblockDay) -> Option<Election> {
+    fn get_election(sb_year: i32) -> Option<Election> {
         let elections:Vec<Election> = read_json_from_file("election.json").expect("Failed to read json");
         for election in elections {
-            if election.year == date.year {
+            if election.year == sb_year {
                 return Some(election);
             }
         }
