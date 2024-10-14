@@ -4,7 +4,7 @@ mod calendar;
 mod skyblock;
 mod helpers;
 
-use crate::calendar::get_calendar;
+use crate::calendar::{CalendarDataBase, User};
 use api::init_api;
 use chrono::prelude::*;
 use env_logger::Builder;
@@ -12,7 +12,6 @@ use std::fs::OpenOptions;
 use std::io::Write;
 use std::sync::Mutex;
 use std::io;
-use crate::skyblock::skyblock_to_datetime;
 
 fn init_logger() {
     let log_file_path = "server.log";
@@ -47,14 +46,10 @@ fn main() -> io::Result<()> {
     // let end  = DateTime::parse_from_rfc3339("2024-10-17T12:55:00+01:00").expect("Failed to parse time");
     // let calendar = get_calendar(start, end);
 
-    let start = skyblock_to_datetime(1,12,376);
-    let end  = skyblock_to_datetime(1,1,376);
-    let calendar = get_calendar(start, end);
-
-    for event in calendar {
-        println!("{:?}", event);
-    }
-
+    let mut calendar_database = CalendarDataBase::new();
+    let new_user = User::new("Draco".to_string());
+    calendar_database.add_user(new_user);
+    println!("{:?}", calendar_database.list_users());
     init_logger();
     init_api()?;
 

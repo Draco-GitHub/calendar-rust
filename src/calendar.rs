@@ -5,22 +5,22 @@ use serde::de::{Error};
 use uuid::Uuid;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub(crate) struct Event {
+pub struct Event {
     id: Uuid,
     title: String,
     description: Option<String>,
     notify_at: DateTime<Utc>,
-    pub(crate) start_time: DateTime<Utc>,
+    pub start_time: DateTime<Utc>,
     end_time: DateTime<Utc>,
     duration: i64,
     recurrence: Option<i64>
 }
 
 impl Event {
-    pub(crate) fn new(title: &str, description:Option<String>, notify_at:DateTime<Utc>, start_time: DateTime<Utc>, end_time: DateTime<Utc>, duration:i64, recurrence:Option<i64>) -> Self {
+    pub const fn new(title: &str, description:Option<String>, notify_at:DateTime<Utc>, start_time: DateTime<Utc>, end_time: DateTime<Utc>, duration:i64, recurrence:Option<i64>) -> Self {
         Event { id: Uuid::new_v4(), title: title.to_string(), description, notify_at, start_time, end_time, duration, recurrence }
     }
-    pub(crate) fn modulo(&self, date:DateTime<Utc>) -> i64 { self.start_time.signed_duration_since(date).num_seconds() % self.recurrence.unwrap() }
+    pub fn modulo(&self, date:DateTime<Utc>) -> i64 { self.start_time.signed_duration_since(date).num_seconds() % self.recurrence.unwrap() }
     fn is_upcoming(&self, date: DateTime<Utc>) -> bool {
         self.start_time > date
     }
@@ -35,13 +35,13 @@ impl Event {
         None
     }
 }
-struct User {
+pub struct User {
     id:Uuid,
     name: String,
     events: HashMap<Uuid, Event>
 }
 impl User {
-    fn new(name:String) -> Self {
+    pub const fn new(name:String) -> Self {
         User { id: Uuid::new_v4(), name, events: HashMap::new() }
     }
 
@@ -72,20 +72,20 @@ impl User {
 
 }
 
-struct CalendarDataBase {
+pub struct CalendarDataBase {
     users: HashMap<Uuid, User>
 }
 impl CalendarDataBase {
-    fn new() -> Self {
+    pub const fn new() -> Self {
         CalendarDataBase {users: HashMap::new()}
     }
-    fn add_user(&mut self, user: User) {
+    pub fn add_user(&mut self, user: User) {
         self.users.insert(user.id, user);
     }
-    fn get_user(&self, user_id:Uuid) -> Option<&User> {
+    pub fn get_user(&self, user_id:Uuid) -> Option<&User> {
         self.users.get(&user_id)
     }
-    fn list_users(&self) -> Vec<&User> {
+    pub fn list_users(&self) -> Vec<&User> {
         self.users.values().collect()
     }
 }

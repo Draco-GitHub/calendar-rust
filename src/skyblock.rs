@@ -19,7 +19,7 @@ struct SkyblockDay {
 //     end: DateTime<Utc>,
 // }
 impl SkyblockDay {
-    fn new( day: i32, month: i32, year: i32) -> Self {
+    pub const fn new( day: i32, month: i32, year: i32) -> Self {
         let events:Vec<String> = Vec::new();
         SkyblockDay { day, month, year, events }
     }
@@ -44,10 +44,9 @@ impl SkyblockDay {
         SkyblockDay::new(day, month, year)
     }
 
-    fn get_events(&mut self, day:i32, month:i32, year:i32) -> Vec<Event> {
-        let date = Self::convert_to_date(day, month, year);
+    fn get_events(&mut self) -> Vec<Event> {
         let mut events = Vec::new();
-        let election: Election = Self::get_election(year).expect("Failed to get election");
+        let election: Election = Self::get_election(self.year).expect("Failed to get election");
         let election_events = election.get_events();
         for event in election_events {
             if event.start_time == Self::convert_to_date(self.day, self.month, self.year) {
@@ -98,7 +97,7 @@ struct Election {
 }
 
 impl Election {
-    fn new(mayor: String, minister: String, perks: Vec<String>, year: i32, start:DateTime<Utc>, end:DateTime<Utc>) -> Election {
+    pub const fn new(mayor: String, minister: String, perks: Vec<String>, year: i32, start:DateTime<Utc>, end:DateTime<Utc>) -> Election {
         Election { mayor, minister, perks, year, start, end }
     }
     async fn get_ongoing_election() -> Result<Election, Error> {
