@@ -10,17 +10,17 @@ pub(crate) struct Event {
     title: String,
     description: Option<String>,
     notify_at: DateTime<Utc>,
-    start_time: DateTime<Utc>,
+    pub(crate) start_time: DateTime<Utc>,
     end_time: DateTime<Utc>,
     duration: i64,
     recurrence: Option<i64>
 }
 
 impl Event {
-    fn new(title: &str, description:Option<String>, notify_at:DateTime<Utc>, start_time: DateTime<Utc>, end_time: DateTime<Utc>, duration:i64, recurrence:Option<i64>) -> Self {
+    pub(crate) fn new(title: &str, description:Option<String>, notify_at:DateTime<Utc>, start_time: DateTime<Utc>, end_time: DateTime<Utc>, duration:i64, recurrence:Option<i64>) -> Self {
         Event { id: Uuid::new_v4(), title: title.to_string(), description, notify_at, start_time, end_time, duration, recurrence }
     }
-    fn modulo(&self, date:DateTime<Utc>) -> i64 { self.start_time.signed_duration_since(date).num_seconds() % self.recurrence.unwrap() }
+    pub(crate) fn modulo(&self, date:DateTime<Utc>) -> i64 { self.start_time.signed_duration_since(date).num_seconds() % self.recurrence.unwrap() }
     fn is_upcoming(&self, date: DateTime<Utc>) -> bool {
         self.start_time > date
     }
