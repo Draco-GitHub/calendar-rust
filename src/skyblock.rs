@@ -12,12 +12,6 @@ struct SkyblockDay {
     year: i32,
     events: Vec<String>
 }
-// #[derive(Debug, Serialize, Deserialize, Clone)]
-// struct SkyblockEvent {
-//     title: String,
-//     start: DateTime<Utc>,
-//     end: DateTime<Utc>,
-// }
 impl SkyblockDay {
     pub fn new( day: i32, month: i32, year: i32) -> Self {
         let events:Vec<String> = Vec::new();
@@ -49,7 +43,7 @@ impl SkyblockDay {
         let election: Election = Self::get_election(self.year).expect("Failed to get election");
         let election_events = election.get_events();
         for event in election_events {
-            if event.start_time == Self::convert_to_date(self.day, self.month, self.year) {
+            if event.get_start_time() == Self::convert_to_date(self.day, self.month, self.year) {
                 events.push(event);
             }
         }

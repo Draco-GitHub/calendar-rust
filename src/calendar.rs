@@ -10,11 +10,12 @@ pub struct Event {
     title: String,
     description: Option<String>,
     notify_at: DateTime<Utc>,
-    pub start_time: DateTime<Utc>,
+    start_time: DateTime<Utc>,
     end_time: DateTime<Utc>,
     duration: i64,
     recurrence: Option<i64>
 }
+
 
 impl Event {
     pub fn new(title: &str, description:Option<String>, notify_at:DateTime<Utc>, start_time: DateTime<Utc>, end_time: DateTime<Utc>, duration:i64, recurrence:Option<i64>) -> Self {
@@ -23,6 +24,9 @@ impl Event {
     pub fn modulo(&self, date:DateTime<Utc>) -> i64 { self.start_time.signed_duration_since(date).num_seconds() % self.recurrence.unwrap() }
     fn is_upcoming(&self, date: DateTime<Utc>) -> bool {
         self.start_time > date
+    }
+    pub(crate) fn get_start_time(&self) -> DateTime<Utc> {
+        self.start_time
     }
     fn next_occurrence(&self, date:DateTime<Utc>) -> Option<DateTime<Utc>> {
         if self.recurrence.is_some() {
@@ -35,25 +39,20 @@ impl Event {
         None
     }
 }
+
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct User {
-    id:Uuid,
-    name: String,
-    events: HashMap<Uuid, Event>
+pub struct Calendar {
+    id: Uuid,
+    title: String,
+    description: Option<String>,
+    events: HashMap<Uuid, Event>,
 }
-impl User {
-    pub fn new(name:String) -> Self {
-        User { id: Uuid::new_v4(), name, events: HashMap::new() }
+impl Calendar {
+    pub fn new(title: String, description: Option<String>) -> Self {
+        Calendar { id: Uuid::new_v4(), title, description, events: HashMap::new() }
     }
 
-    pub fn get_id(&self) -> Uuid {
-        self.id
-    }
-
-    pub fn get_name(&self) -> String {
-        self.name.clone()
-    }
-
+    pub fn get_id(&self) -> Uuid { self.id }
     fn add_event(&mut self, event: Event) {
         self.events.insert(event.id, event);
     }
@@ -66,10 +65,6 @@ impl User {
         self.events.values().collect()
     }
 
-    // fn find_events_at(&self, time: DateTime<Utc>) -> Vec<&Event> {
-    //     self.events.values().filter(|event| event.is_happening_at(time)).collect()
-    // }
-
     fn find_upcoming_events(&self, date: DateTime<Utc>) -> Vec<&Event> {
         let mut upcoming_events: Vec<&Event> = self.events.values()
             .filter(|event| event.is_upcoming(date))
@@ -79,14 +74,45 @@ impl User {
         upcoming_events
     }
 
+
 }
 
-pub struct CalendarDataBase {
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct User {
+    id:Uuid,
+    name: String,
+    calendars: HashMap<Uuid, Calendar>,
+}
+impl User {
+    pub fn new(name:String) -> Self {
+        User { id: Uuid::new_v4(), name, calendars: HashMap::new() }
+    }
+
+    pub fn get_id(&self) -> Uuid {
+        self.id
+    }
+
+    pub fn get_name(&self) -> String {
+        self.name.clone()
+    }
+
+    pub fn add_calendar(&mut self, calendar: Calendar) {
+        self.calendars.insert(Uuid::new_v4(), calendar);
+    }
+
+    pub fn get_calendar(&self, id: Uuid) -> Option<&Calendar> {
+        self.calendars.get(&id)
+    }
+
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct DataBase {
     users: HashMap<Uuid, User>
 }
-impl CalendarDataBase {
+impl DataBase {
     pub fn new() -> Self {
-        CalendarDataBase {users: HashMap::new()}
+        DataBase {users: HashMap::new()}
     }
     pub fn add_user(&mut self, user: User) {
         self.users.insert(user.id, user);
