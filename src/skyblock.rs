@@ -19,7 +19,7 @@ struct SkyblockDay {
 //     end: DateTime<Utc>,
 // }
 impl SkyblockDay {
-    pub const fn new( day: i32, month: i32, year: i32) -> Self {
+    pub fn new( day: i32, month: i32, year: i32) -> Self {
         let events:Vec<String> = Vec::new();
         SkyblockDay { day, month, year, events }
     }
@@ -97,22 +97,44 @@ struct Election {
 }
 
 impl Election {
-    pub const fn new(mayor: String, minister: String, perks: Vec<String>, year: i32, start:DateTime<Utc>, end:DateTime<Utc>) -> Election {
+    pub fn new(mayor: String, minister: String, perks: Vec<String>, year: i32, start:DateTime<Utc>, end:DateTime<Utc>) -> Election {
         Election { mayor, minister, perks, year, start, end }
     }
-    async fn get_ongoing_election() -> Result<Election, Error> {
-        let response = reqwest::get("https://api.hypixel.net/v2/resources/skyblock/election").await?.json::<Value>().await?;
-        let mayor = response.get("mayor").and_then(|m| m.get("name").map(|n| n.as_str())).ok_or_else(|| "Mayor name not found")?.to_string();
-        let minister = response.get("mayor").and_then(|m| m.get("minister").and_then(|mi| mi.get("name").map(|n| n.as_str()))).ok_or_else(|| "Minister name not found")?.to_string();
-        let mayor_perks = response.get("mayor").and_then(|m| m.get("perks").map(|p| p.as_array())).ok_or_else(|| "Mayor perks not found")?;
-        let mut perks = mayor_perks.iter().filter_map(|perk| perk.get("name").map(|name| name.as_str().unwrap_or_default().to_string())).collect::<Vec<_>>();
-        let minister_perks = response.get("mayor").and_then(|m| m.get("minister").and_then(|mi| mi.get("perks").map(|p| p.as_array()))).unwrap_or(&vec![]); // fallback to empty array
-        perks.extend(minister_perks.iter().filter_map(|perk| perk.get("name").map(|name| name.as_str().unwrap_or_default().to_string())));
-        let year = response.get("year").and_then(|y| y.as_i64()).ok_or_else(|| "Year not found")? as i32;
-        let start = SkyblockDay::convert_to_date(27, 5, year);
-        let end = SkyblockDay::convert_to_date(25, 5, year + 1);
-        Ok(Election::new(mayor, minister, perks, year, start, end))
+    async fn get_ongoing_election() -> Result<Election, reqwest::Error> {
+        // Make the API request and deserialize the response into a JSON `Value`
+        let request = reqwest::get("https://api.hypixel.net/v2/resources/skyblock/election").await?.json::<Value>().await?;
+
+        // Extract the mayor object and its fields
+        let mayor = request.get("mayor").expect("Failure to get mayor value");
+        let mayor_name = mayor.get("name").expect("Failure to get mayor name value").as_str().expect("Expected a string").to_string();
+        let mayor_perks = mayor.get("perks").expect("Failure to get mayor perks value");
+
+        // Extract the year as an i32
+        let year = request.get("year").expect("Failure to get year value").as_i64().expect("Expected a number") as i32;
+
+        // Extract the minister object and its fields
+        let minister = mayor.get("minister").expect("Failure to get minister value");
+        let minister_name = minister.get("name").expect("Failure to get minister name value").as_str().expect("Expected a string").to_string();
+        let minister_perks = minister.get("perks").expect("Failure to get minister perks value");
+
+        // Collect perks for both the mayor and minister
+        let mut perks = Vec::new();
+        for perk in mayor_perks.as_array().expect("Expected perks array") {
+            perks.push(perk.get("name").expect("Failure to get perk name").as_str().expect("Expected a string").to_string());
+        }
+        for perk in minister_perks.as_array().expect("Expected perks array") {
+            perks.push(perk.get("name").expect("Failure to get perk name").as_str().expect("Expected a string").to_string());
+        }
+
+        // Calculate start and end dates using your custom calendar system
+        let start: DateTime<Utc> = SkyblockDay::convert_to_date(27, 5, year);
+        let end: DateTime<Utc> = SkyblockDay::convert_to_date(25, 5, year + 1); // Adjust dates as needed
+
+        // Return the Election object wrapped in Ok to indicate success
+        Ok(Election::new(mayor_name, minister_name, perks, year, start, end))
     }
+
+
 
     fn get_events(&self) -> Vec<Event> {
         let mut events = Vec::new();

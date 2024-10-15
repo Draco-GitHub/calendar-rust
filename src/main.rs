@@ -48,8 +48,10 @@ fn main() -> io::Result<()> {
 
     let mut calendar_database = CalendarDataBase::new();
     let new_user = User::new("Draco".to_string());
-    calendar_database.add_user(new_user);
+    calendar_database.add_user(new_user.clone());
     println!("{:?}", calendar_database.list_users());
+    println!("{:?}", calendar_database.get_user(new_user.clone().get_id()));
+    
     init_logger();
     init_api()?;
 

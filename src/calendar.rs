@@ -17,7 +17,7 @@ pub struct Event {
 }
 
 impl Event {
-    pub const fn new(title: &str, description:Option<String>, notify_at:DateTime<Utc>, start_time: DateTime<Utc>, end_time: DateTime<Utc>, duration:i64, recurrence:Option<i64>) -> Self {
+    pub fn new(title: &str, description:Option<String>, notify_at:DateTime<Utc>, start_time: DateTime<Utc>, end_time: DateTime<Utc>, duration:i64, recurrence:Option<i64>) -> Self {
         Event { id: Uuid::new_v4(), title: title.to_string(), description, notify_at, start_time, end_time, duration, recurrence }
     }
     pub fn modulo(&self, date:DateTime<Utc>) -> i64 { self.start_time.signed_duration_since(date).num_seconds() % self.recurrence.unwrap() }
@@ -35,14 +35,23 @@ impl Event {
         None
     }
 }
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct User {
     id:Uuid,
     name: String,
     events: HashMap<Uuid, Event>
 }
 impl User {
-    pub const fn new(name:String) -> Self {
+    pub fn new(name:String) -> Self {
         User { id: Uuid::new_v4(), name, events: HashMap::new() }
+    }
+
+    pub fn get_id(&self) -> Uuid {
+        self.id
+    }
+
+    pub fn get_name(&self) -> String {
+        self.name.clone()
     }
 
     fn add_event(&mut self, event: Event) {
@@ -57,9 +66,9 @@ impl User {
         self.events.values().collect()
     }
 
-    fn find_events_at(&self, time: DateTime<Utc>) -> Vec<&Event> {
-        self.events.values().filter(|event| event.is_happening_at(time)).collect()
-    }
+    // fn find_events_at(&self, time: DateTime<Utc>) -> Vec<&Event> {
+    //     self.events.values().filter(|event| event.is_happening_at(time)).collect()
+    // }
 
     fn find_upcoming_events(&self, date: DateTime<Utc>) -> Vec<&Event> {
         let mut upcoming_events: Vec<&Event> = self.events.values()
@@ -76,7 +85,7 @@ pub struct CalendarDataBase {
     users: HashMap<Uuid, User>
 }
 impl CalendarDataBase {
-    pub const fn new() -> Self {
+    pub fn new() -> Self {
         CalendarDataBase {users: HashMap::new()}
     }
     pub fn add_user(&mut self, user: User) {
