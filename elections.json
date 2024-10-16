@@ -1,5 +1,5 @@
-{
-  "375": {
+[
+  {
     "mayor": "Finnegan",
     "minister": "Marina",
     "perks": [
@@ -8,16 +8,33 @@
       "Pelt-pocalypse",
       "Fishing Festival"
     ],
-    "year": 375
+    "year": 376,
+    "start": "2024-10-07T11:55:00Z",
+    "end": "2024-10-17 12:15:00+00:00"
   },
-  "376": {
+  {
     "mayor": "jerry",
-    "minister": "",
+    "minister": null,
     "perks": [
       "Perkpocalypse",
       "Statspocalypse",
       "Jerrypocalypse"
     ],
-    "year": 376
+    "year": 377,
+    "start": "2024-10-07T11:55:00Z",
+    "end": "2024-10-12 08:15:00+00:00"
+  },
+  {
+    "mayor": "Diana",
+    "minister": "Aatrox",
+    "perks": [
+      "Mythological Ritual",
+      "Pet XP Buff",
+      "Sharing is Caring",
+      "Slayer XP Buff"
+    ],
+    "year": 378,
+    "start": "2024-10-07T23:15:00Z",
+    "end": "2024-10-17 12:15:00+00:00"
   }
-}
+]

@@ -1,101 +1,92 @@
 [
   {
-    "name": "Dark Auction",
+    "title": "Dark Auction",
     "description": "",
     "notify_at": "2024-10-09T18:53:00+01:00",
     "start_time": "2024-10-09T18:55:00+01:00",
     "end_time": "2024-10-09T19:15:00+01:00",
-    "repeat": true,
-    "interval": 1200,
-    "reminder": 120
+    "duration": 1200,
+    "recurrence": 1200,
+    "remind": 120
   },
   {
-    "name": "Jacob's Farming Contest",
+    "title": "Jacob's Farming Contest",
     "description": "",
     "notify_at": "2024-10-09T18:13:00+01:00",
     "start_time": "2024-10-09T18:15:00+01:00",
     "end_time": "2024-10-09T18:35:00+01:00",
     "duration": 1200,
-    "repeat": true,
-    "interval": 3600,
-    "reminder": 120
+    "recurrence": 3600,
+    "remind": 120
   },
   {
-    "name": "Hoppity Start",
+    "title": "Hoppity Start",
     "description": "",
     "notify_at": "2024-10-10T14:53:00+01:00",
     "start_time": "2024-10-10T14:55:00+01:00",
     "end_time": "2024-10-12T21:55:00+01:00",
     "duration": 111600,
-    "repeat": true,
-    "interval": 446400,
-    "reminder": 120
+    "recurrence": 446400,
+    "remind": 120
   },
   {
-    "name": "Oringo-1",
+    "title": "Oringo-1",
     "description": "",
     "notify_at": "2024-10-11T21:53:00+01:00",
     "start_time": "2024-10-11T21:55:00+01:00",
     "end_time": "2024-10-12T22:55:00+01:00",
     "duration": 3600,
-    "repeat": true,
-    "interval": 446400,
-    "reminder": 120
+    "recurrence": 446400,
+    "remind": 120
   },
   {
-    "name": "Oringo-2",
+    "title": "Oringo-2",
     "description": "",
     "notify_at": "2024-10-14T11:53:00+01:00",
     "start_time": "2024-10-14T11:55:00+01:00",
     "end_time": "2024-10-14T12:55:00+01:00",
     "duration": 3600,
-    "repeat": true,
-    "interval": 446400,
-    "reminder": 120
+    "recurrence": 446400,
+    "remind": 120
   },
   {
-    "name": "Jerry Workshop Opens",
+    "title": "Jerry Workshop Opens",
     "description": "",
     "notify_at": "2024-10-10T04:33:00+01:00",
     "start_time": "2024-10-10T04:35:00+01:00",
     "end_time": "2024-10-10T14:55:00+01:00",
     "duration": 37200,
-    "repeat": true,
-    "interval": 446400,
-    "reminder": 120
+    "recurrence": 446400,
+    "remind": 120
   },
   {
-    "name": "Season of Jerry",
+    "title": "Season of Jerry",
     "description": "",
     "notify_at": "2024-10-10T12:12:00+01:00",
     "start_time": "2024-10-10T12:15:00+01:00",
     "end_time": "2024-10-10T13:15:00+01:00",
     "duration": 3600,
-    "repeat": true,
-    "interval": 446400,
-    "reminder": 120
+    "recurrence": 446400,
+    "remind": 120
   },
   {
-    "name": "New Year Celebration",
+    "title": "New Year Celebration",
     "description": "",
     "notify_at": "2024-10-10T13:53:00+01:00",
     "start_time": "2024-10-10T13:55:00+01:00",
     "end_time": "2024-10-14T14:55:00+01:00",
     "duration": 3600,
-    "repeat": true,
-    "interval": 446400,
-    "reminder": 120
+    "recurrence": 446400,
+    "remind": 120
   },
   {
-    "name": "event",
-    "description": "(31, 12, 300)",
-    "notify_at": "2024-10-10T13:53:00+01:00",
-    "start_time": "2024-10-10T13:55:00+01:00",
-    "end_time": "2024-10-14T14:55:00+01:00",
-    "next_event": "2024-10-14T14:55:00+01:00",
+    "title": "Election Over/Start",
+    "description": "",
+    "notify_at": "2024-10-17T12:13:00+01:00",
+    "start_time": "2024-10-17T12:15:00+01:00",
+    "end_time": "2024-10-17T12:15:00+01:00",
     "duration": 3600,
-    "repeat": true,
-    "interval": 446400,
-    "reminder": 120
+    "recurrence": 446400,
+    "remind": 120
   }
 ]

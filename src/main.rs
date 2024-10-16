@@ -4,7 +4,7 @@ mod calendar;
 mod skyblock;
 mod helpers;
 
-use crate::calendar::{Calendar, CalendarDataBase, DataBase, User};
+use crate::calendar::{Calendar, DataBase, Event, User};
 use api::init_api;
 use chrono::prelude::*;
 use env_logger::Builder;
@@ -12,7 +12,8 @@ use std::fs::OpenOptions;
 use std::io::Write;
 use std::sync::Mutex;
 use std::io;
-use serde_json::error::Category::Data;
+use chrono::Duration;
+use crate::skyblock::{generate_calendar, SkyblockDay};
 
 fn init_logger() {
     let log_file_path = "server.log";
@@ -36,26 +37,31 @@ fn init_logger() {
 }
 
 fn main() -> io::Result<()> {
-    // let rt = tokio::runtime::Runtime::new().unwrap();
-    // rt.block_on(async {
-    //     if let Err(e) = notify_before_event().await {
-    //         eprintln!("Error {:?}", e)
-    //     }
-    // });
+    println!("test: {:?}", SkyblockDay::skyblock_to_date(14,3,379));
+    println!("election start: {:?}", SkyblockDay::skyblock_to_date(30,6,379));
+    println!("election end: {:?}", SkyblockDay::skyblock_to_date(30,6,380));
+    println!("election start: {:?}", SkyblockDay::date_to_skyblock(DateTime::parse_from_str("2024-10-16 20:15:00+01:00", "%Y-%m-%d %H:%M:%S%z").expect("Failed to parse DateTime").with_timezone(&Utc)));
+    println!("election start: {:?}", SkyblockDay::date_to_skyblock(DateTime::parse_from_str("2024-10-17 12:15:00+01:00", "%Y-%m-%d %H:%M:%S%z").expect("Failed to parse DateTime").with_timezone(&Utc)));
+    println!("election end: {:?}", SkyblockDay::date_to_skyblock(DateTime::parse_from_str("2024-10-22 04:15:00+01:00", "%Y-%m-%d %H:%M:%S%z").expect("Failed to parse DateTime").with_timezone(&Utc)));
+    println!("election end: {:?}", SkyblockDay::date_to_skyblock(DateTime::parse_from_str("2019-06-11 17:55:00+00:00", "%Y-%m-%d %H:%M:%S%z").expect("Failed to parse DateTime").with_timezone(&Utc)));
+    let date = DateTime::parse_from_str("2024-10-22 04:15:00+01:00", "%Y-%m-%d %H:%M:%S%z").expect("Failed to parse DateTime").with_timezone(&Utc) - Duration::minutes(2821520);
+    println!("{date}");
+    println!("{:?}", SkyblockDay::date_to_skyblock(date));
 
-    // let start = DateTime::parse_from_rfc3339("2024-10-10T13:00:00+01:00").expect("Failed to parse time");
-    // let end  = DateTime::parse_from_rfc3339("2024-10-17T12:55:00+01:00").expect("Failed to parse time");
-    // let calendar = get_calendar(start, end);
-
-    let mut calendar_database = DataBase::new();
-    let mut new_user = User::new("Global".to_string());
-    let new_calendar = Calendar::new("Skyblock".to_string(), None);
-    new_user.add_calendar(new_calendar);
-    let calendar = new_user.get_calendar(new_calendar.get_id());
-
-    calendar_database.add_user(new_user.clone());
-    println!("{:?}", calendar_database.list_users());
-    println!("{:?}", calendar_database.get_user(new_user.clone().get_id()));
+    // let mut calendar_database = DataBase::new();
+    // let mut new_user = User::new("Global".to_string());
+    // let mut new_calendar:Calendar = skyblock::generate_calendar(Utc::now(), Utc::now()+Duration::minutes(7460));
+    // let calendar_id = new_calendar.get_id();
+    // new_user.add_calendar(new_calendar);
+    // let mut calendar = new_user.get_calendar(calendar_id).unwrap();
+    //
+    // calendar_database.add_user(new_user.clone());
+    //
+    // let mut sbday = SkyblockDay::new(1, 1, 378);
+    // let ev = sbday.find_events();
+    // println!("{:?}", ev);
+    // println!("{:?}", calendar_database.list_users());
+    // println!("{:?}", calendar_database.get_user(new_user.clone().get_id()));
     
     init_logger();
     init_api()?;

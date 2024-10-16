@@ -6,20 +6,20 @@ use uuid::Uuid;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Event {
-    id: Uuid,
     title: String,
     description: Option<String>,
     notify_at: DateTime<Utc>,
     start_time: DateTime<Utc>,
     end_time: DateTime<Utc>,
     duration: i64,
-    recurrence: Option<i64>
+    recurrence: Option<i64>,
+    remind: Option<i64>
 }
 
 
 impl Event {
-    pub fn new(title: &str, description:Option<String>, notify_at:DateTime<Utc>, start_time: DateTime<Utc>, end_time: DateTime<Utc>, duration:i64, recurrence:Option<i64>) -> Self {
-        Event { id: Uuid::new_v4(), title: title.to_string(), description, notify_at, start_time, end_time, duration, recurrence }
+    pub fn new(title: &str, description:Option<String>, notify_at:DateTime<Utc>, start_time: DateTime<Utc>, end_time: DateTime<Utc>, duration:i64, recurrence:Option<i64>, remind:Option<i64>) -> Self {
+        Event { title: title.to_string(), description, notify_at, start_time, end_time, duration, recurrence, remind}
     }
     pub fn modulo(&self, date:DateTime<Utc>) -> i64 { self.start_time.signed_duration_since(date).num_seconds() % self.recurrence.unwrap() }
     fn is_upcoming(&self, date: DateTime<Utc>) -> bool {
@@ -52,20 +52,20 @@ impl Calendar {
         Calendar { id: Uuid::new_v4(), title, description, events: HashMap::new() }
     }
 
-    pub fn get_id(&self) -> Uuid { self.id }
-    fn add_event(&mut self, event: Event) {
-        self.events.insert(event.id, event);
+    pub fn get_id(&self) -> Uuid { self.id.clone() }
+    pub fn add_event(&mut self, event: Event) {
+        self.events.insert(Uuid::new_v4(), event);
     }
 
-    fn get_event(&self, event_id: Uuid) -> Option<&Event> {
+    pub fn get_event(&self, event_id: Uuid) -> Option<&Event> {
         self.events.get(&event_id)
     }
 
-    fn list_events(&self) -> Vec<&Event> {
+    pub fn list_events(&self) -> Vec<&Event> {
         self.events.values().collect()
     }
 
-    fn find_upcoming_events(&self, date: DateTime<Utc>) -> Vec<&Event> {
+    pub fn find_upcoming_events(&self, date: DateTime<Utc>) -> Vec<&Event> {
         let mut upcoming_events: Vec<&Event> = self.events.values()
             .filter(|event| event.is_upcoming(date))
             .collect();
