@@ -155,7 +155,7 @@ impl Election {
 pub fn generate_calendar(from: DateTime<Utc>, to: DateTime<Utc>) -> Calendar {
     let mut calendar = Calendar::new("Skyblock".to_string(), None);
     let mut next_valid_day = SkyblockDay::get_next_skyblock_day(from);
-    let mut events:Vec<Event> = read_json_from_file("skyblock_events.json").unwrap();
+    let events:Vec<Event> = read_json_from_file("skyblock_events.json").unwrap();
     while next_valid_day < to {
         for event in &events {
             println!("{}", event.modulo(next_valid_day));

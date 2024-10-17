@@ -42,14 +42,16 @@ fn main() -> io::Result<()> {
     println!("election end: {:?}", SkyblockDay::new(30,6,380).as_datetime());
 
 
-    // let mut calendar_database = DataBase::new();
-    // let mut new_user = User::new("Global".to_string());
-    // let mut new_calendar:Calendar = skyblock::generate_calendar(Utc::now(), Utc::now()+Duration::minutes(7460));
-    // let calendar_id = new_calendar.get_id();
-    // new_user.add_calendar(new_calendar);
-    // let mut calendar = new_user.get_calendar(calendar_id).unwrap();
+
+
+    let mut calendar_database = DataBase::new();
+    let mut new_user = User::new("Global".to_string());
+    let mut new_calendar:Calendar = skyblock::generate_calendar(Utc::now(), Utc::now()+Duration::minutes(7460));
+    let calendar_id = new_calendar.get_id();
+    new_user.add_calendar(new_calendar);
+    let mut calendar = new_user.get_calendar(calendar_id).unwrap();
     //
-    // calendar_database.add_user(new_user.clone());
+    calendar_database.add_user(new_user.clone());
     //
     // let mut sbday = SkyblockDay::new(1, 1, 378);
     // let ev = sbday.find_events();
