@@ -40,7 +40,11 @@ impl SkyblockDay {
 
     pub(crate) fn get_events(&mut self) -> Vec<Event> {
         let mut events = Vec::new();
-        let election: Election = Self::get_election(self.year).expect("Failed to get election");
+        let option = Self::get_election(self.year+1);
+        if option.is_none() {
+            return events
+        }
+        let election = option.unwrap();
         let election_events = election.get_events();
         println!("{:?}", election);
         for event in election_events {

@@ -2,9 +2,9 @@
   {
     "title": "Dark Auction",
     "description": "",
-    "notify_at": "2024-10-09T18:53:00+01:00",
-    "start_time": "2024-10-09T18:55:00+01:00",
-    "end_time": "2024-10-09T19:15:00+01:00",
+    "notify_at": "2024-10-09 18:53:00+01:00",
+    "start_time": "2024-10-09 18:55:00+01:00",
+    "end_time": "2024-10-09 19:15:00+01:00",
     "duration": 1200,
     "recurrence": 1200,
     "remind": 120
@@ -12,9 +12,9 @@
   {
     "title": "Jacob's Farming Contest",
     "description": "",
-    "notify_at": "2024-10-09T18:13:00+01:00",
-    "start_time": "2024-10-09T18:15:00+01:00",
-    "end_time": "2024-10-09T18:35:00+01:00",
+    "notify_at": "2024-10-09 18:13:00+01:00",
+    "start_time": "2024-10-09 18:15:00+01:00",
+    "end_time": "2024-10-09 18:35:00+01:00",
     "duration": 1200,
     "recurrence": 3600,
     "remind": 120
@@ -22,9 +22,9 @@
   {
     "title": "Hoppity Start",
     "description": "",
-    "notify_at": "2024-10-20T22:53:00+01:00",
-    "start_time": "2024-10-20T22:55:00+01:00",
-    "end_time": "2024-10-22T05:55:00+01:00",
+    "notify_at": "2024-10-20 22:53:00+01:00",
+    "start_time": "2024-10-20 22:55:00+01:00",
+    "end_time": "2024-10-22 05:55:00+01:00",
     "duration": 111600,
     "recurrence": 446400,
     "remind": 120
@@ -32,9 +32,9 @@
   {
     "title": "Oringo-1",
     "description": "",
-    "notify_at": "2024-10-19T15:53:00+01:00",
-    "start_time": "2024-10-19T15:55:00+01:00",
-    "end_time": "2024-10-19T16:55:00+01:00",
+    "notify_at": "2024-10-19 15:53:00+01:00",
+    "start_time": "2024-10-19 15:55:00+01:00",
+    "end_time": "2024-10-19T1 :55:00+01:00",
     "duration": 3600,
     "recurrence": 446400,
     "remind": 120
@@ -42,9 +42,9 @@
   {
     "title": "Oringo-2",
     "description": "",
-    "notify_at": "2024-10-24T19:13:00+01:00",
-    "start_time": "2024-10-24T19:15:00+01:00",
-    "end_time": "2024-10-24T20:15:00+01:00",
+    "notify_at": "2024-10-24 19:13:00+01:00",
+    "start_time": "2024-10-24 19:15:00+01:00",
+    "end_time": "2024-10-24 20:15:00+01:00",
     "duration": 3600,
     "recurrence": 446400,
     "remind": 120
@@ -52,9 +52,9 @@
   {
     "title": "Jerry Workshop Opens",
     "description": "",
-    "notify_at": "2024-10-10T04:33:00+01:00",
-    "start_time": "2024-10-10T04:35:00+01:00",
-    "end_time": "2024-10-10T14:55:00+01:00",
+    "notify_at": "2024-10-10 04:33:00+01:00",
+    "start_time": "2024-10-10 04:35:00+01:00",
+    "end_time": "2024-10-10 14:55:00+01:00",
     "duration": 37200,
     "recurrence": 446400,
     "remind": 120
@@ -62,9 +62,9 @@
   {
     "title": "Season of Jerry",
     "description": "",
-    "notify_at": "2024-10-20T20:13:00+01:00",
-    "start_time": "2024-10-20T20:15:00+01:00",
-    "end_time": "2024-10-20T21:15:00+01:00",
+    "notify_at": "2024-10-20 20:13:00+01:00",
+    "start_time": "2024-10-20 20:15:00+01:00",
+    "end_time": "2024-10-20 21:15:00+01:00",
     "duration": 3600,
     "recurrence": 446400,
     "remind": 120
@@ -72,9 +72,9 @@
   {
     "title": "New Year Celebration",
     "description": "",
-    "notify_at": "2024-20-10T21:13:00+01:00",
-    "start_time": "2024-20-10T21:15:00+01:00",
-    "end_time": "2024-20-10T22:15:00+01:00",
+    "notify_at": "2024-10-20 21:13:00+01:00",
+    "start_time": "2024-10-20 21:15:00+01:00",
+    "end_time": "2024-10-20 22:15:00+01:00",
     "duration": 3600,
     "recurrence": 446400,
     "remind": 120
@@ -90,13 +90,23 @@
     "remind": 120
   },
   {
+    "title": "Special Mayor",
+    "description": "",
+    "notify_at": "2024-10-12 19:13:00+01:00",
+    "start_time": "2024-10-12 19:15:00+01:00",
+    "end_time": "2024-10-19 03:35:00+01:00",
+    "duration": 1214700,
+    "recurrence": 31536000,
+    "remind": 120
+  },
+  {
     "title": "The Great Spook",
     "description": "",
     "notify_at": "2024-10-17 12:13:00+01:00",
     "start_time": "2024-10-19 03:35:00+01:00",
     "end_time": "2024-11-02 05:00:00+01:00",
     "duration": 1214700,
-    "recurrence": null,
+    "recurrence": 31536000,
     "remind": 120
   }
 ]

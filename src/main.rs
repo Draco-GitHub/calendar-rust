@@ -41,15 +41,20 @@ fn main() -> io::Result<()> {
     println!("election start: {:?}", SkyblockDay::new(30,6,379).as_datetime());
     println!("election end: {:?}", SkyblockDay::new(30,6,380).as_datetime());
 
-
+    let x = DateTime::parse_from_str("2024-10-17 13:55:00+01:00", "%Y-%m-%d %H:%M:%S%z").expect("no x");
+    let y = DateTime::parse_from_str("2024-10-22 04:15:00+01:00", "%Y-%m-%d %H:%M:%S%z").expect("no y");
+    let z = y-x;
+    println!("{}", x + Duration::seconds(z.num_seconds()));
+    let (days, hours, minutes) = seconds_to_dhm(z.num_seconds());
+    println!("{} days, {} hours, {} minutes", days, hours, minutes);
 
 
     let mut calendar_database = DataBase::new();
     let mut new_user = User::new("Global".to_string());
-    let mut new_calendar:Calendar = skyblock::generate_calendar(Utc::now(), Utc::now()+Duration::minutes(7460));
-    let calendar_id = new_calendar.get_id();
-    new_user.add_calendar(new_calendar);
-    let mut calendar = new_user.get_calendar(calendar_id).unwrap();
+    // let mut new_calendar:Calendar = skyblock::generate_calendar(Utc::now(), Utc::now()+Duration::minutes(7460));
+    // let calendar_id = new_calendar.get_id();
+    // new_user.add_calendar(new_calendar);
+    // let mut calendar = new_user.get_calendar(calendar_id).unwrap();
     //
     calendar_database.add_user(new_user.clone());
     //
@@ -63,4 +68,11 @@ fn main() -> io::Result<()> {
     init_api()?;
 
     Ok(())
+}
+
+fn seconds_to_dhm(seconds: i64) -> (i64, i64, i64) {
+    let days = seconds / 86400; // 86400 seconds in a day
+    let hours = (seconds % 86400) / 3600; // 3600 seconds in an hour
+    let minutes = (seconds % 3600) / 60; // 60 seconds in a minute
+    (days, hours, minutes)
 }

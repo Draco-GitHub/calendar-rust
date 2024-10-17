@@ -14,7 +14,7 @@
   },
   {
     "mayor": "jerry",
-    "minister": null,
+    "minister": "",
     "perks": [
       "Perkpocalypse",
       "Statspocalypse",
