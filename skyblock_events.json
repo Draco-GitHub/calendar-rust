@@ -22,9 +22,9 @@
   {
     "title": "Hoppity Start",
     "description": "",
-    "notify_at": "2024-10-10T14:53:00+01:00",
-    "start_time": "2024-10-10T14:55:00+01:00",
-    "end_time": "2024-10-12T21:55:00+01:00",
+    "notify_at": "2024-10-20T22:53:00+01:00",
+    "start_time": "2024-10-20T22:55:00+01:00",
+    "end_time": "2024-10-22T05:55:00+01:00",
     "duration": 111600,
     "recurrence": 446400,
     "remind": 120
@@ -32,9 +32,9 @@
   {
     "title": "Oringo-1",
     "description": "",
-    "notify_at": "2024-10-11T21:53:00+01:00",
-    "start_time": "2024-10-11T21:55:00+01:00",
-    "end_time": "2024-10-12T22:55:00+01:00",
+    "notify_at": "2024-10-19T15:53:00+01:00",
+    "start_time": "2024-10-19T15:55:00+01:00",
+    "end_time": "2024-10-19T16:55:00+01:00",
     "duration": 3600,
     "recurrence": 446400,
     "remind": 120
@@ -42,9 +42,9 @@
   {
     "title": "Oringo-2",
     "description": "",
-    "notify_at": "2024-10-14T11:53:00+01:00",
-    "start_time": "2024-10-14T11:55:00+01:00",
-    "end_time": "2024-10-14T12:55:00+01:00",
+    "notify_at": "2024-10-24T19:13:00+01:00",
+    "start_time": "2024-10-24T19:15:00+01:00",
+    "end_time": "2024-10-24T20:15:00+01:00",
     "duration": 3600,
     "recurrence": 446400,
     "remind": 120
@@ -62,9 +62,9 @@
   {
     "title": "Season of Jerry",
     "description": "",
-    "notify_at": "2024-10-10T12:12:00+01:00",
-    "start_time": "2024-10-10T12:15:00+01:00",
-    "end_time": "2024-10-10T13:15:00+01:00",
+    "notify_at": "2024-10-20T20:13:00+01:00",
+    "start_time": "2024-10-20T20:15:00+01:00",
+    "end_time": "2024-10-20T21:15:00+01:00",
     "duration": 3600,
     "recurrence": 446400,
     "remind": 120
@@ -72,9 +72,9 @@
   {
     "title": "New Year Celebration",
     "description": "",
-    "notify_at": "2024-10-10T13:53:00+01:00",
-    "start_time": "2024-10-10T13:55:00+01:00",
-    "end_time": "2024-10-14T14:55:00+01:00",
+    "notify_at": "2024-20-10T21:13:00+01:00",
+    "start_time": "2024-20-10T21:15:00+01:00",
+    "end_time": "2024-20-10T22:15:00+01:00",
     "duration": 3600,
     "recurrence": 446400,
     "remind": 120
@@ -82,11 +82,21 @@
   {
     "title": "Election Over/Start",
     "description": "",
-    "notify_at": "2024-10-17T12:13:00+01:00",
-    "start_time": "2024-10-17T12:15:00+01:00",
-    "end_time": "2024-10-17T12:15:00+01:00",
-    "duration": 3600,
-    "recurrence": 446400,
+    "notify_at": "2024-10-17 12:13:00+01:00",
+    "start_time": "2024-10-17 12:15:00+01:00",
+    "end_time": "2024-10-22 04:15:00+01:00",
+    "duration": 403200,
+    "recurrence": 403200,
+    "remind": 120
+  },
+  {
+    "title": "The Great Spook",
+    "description": "",
+    "notify_at": "2024-10-17 12:13:00+01:00",
+    "start_time": "2024-10-19 03:35:00+01:00",
+    "end_time": "2024-11-02 05:00:00+01:00",
+    "duration": 1214700,
+    "recurrence": null,
     "remind": 120
   }
 ]

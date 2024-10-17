@@ -8,7 +8,7 @@ use uuid::Uuid;
 pub struct Event {
     title: String,
     description: Option<String>,
-    notify_at: DateTime<Utc>,
+    notify_at: Option<DateTime<Utc>>,
     start_time: DateTime<Utc>,
     end_time: DateTime<Utc>,
     duration: i64,
@@ -16,9 +16,8 @@ pub struct Event {
     remind: Option<i64>
 }
 
-
 impl Event {
-    pub fn new(title: &str, description:Option<String>, notify_at:DateTime<Utc>, start_time: DateTime<Utc>, end_time: DateTime<Utc>, duration:i64, recurrence:Option<i64>, remind:Option<i64>) -> Self {
+    pub fn new(title: &str, description:Option<String>, notify_at:Option<DateTime<Utc>>, start_time: DateTime<Utc>, end_time: DateTime<Utc>, duration:i64, recurrence:Option<i64>, remind:Option<i64>) -> Self {
         Event { title: title.to_string(), description, notify_at, start_time, end_time, duration, recurrence, remind}
     }
     pub fn modulo(&self, date:DateTime<Utc>) -> i64 { self.start_time.signed_duration_since(date).num_seconds() % self.recurrence.unwrap() }
@@ -84,7 +83,7 @@ pub struct User {
     calendars: HashMap<Uuid, Calendar>,
 }
 impl User {
-    pub fn new(name:String) -> Self {
+    pub fn new(name: String) -> Self {
         User { id: Uuid::new_v4(), name, calendars: HashMap::new() }
     }
 
@@ -103,7 +102,6 @@ impl User {
     pub fn get_calendar(&self, id: Uuid) -> Option<&Calendar> {
         self.calendars.get(&id)
     }
-
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]

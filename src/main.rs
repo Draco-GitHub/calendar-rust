@@ -37,16 +37,10 @@ fn init_logger() {
 }
 
 fn main() -> io::Result<()> {
-    println!("test: {:?}", SkyblockDay::skyblock_to_date(14,3,379));
-    println!("election start: {:?}", SkyblockDay::skyblock_to_date(30,6,379));
-    println!("election end: {:?}", SkyblockDay::skyblock_to_date(30,6,380));
-    println!("election start: {:?}", SkyblockDay::date_to_skyblock(DateTime::parse_from_str("2024-10-16 20:15:00+01:00", "%Y-%m-%d %H:%M:%S%z").expect("Failed to parse DateTime").with_timezone(&Utc)));
-    println!("election start: {:?}", SkyblockDay::date_to_skyblock(DateTime::parse_from_str("2024-10-17 12:15:00+01:00", "%Y-%m-%d %H:%M:%S%z").expect("Failed to parse DateTime").with_timezone(&Utc)));
-    println!("election end: {:?}", SkyblockDay::date_to_skyblock(DateTime::parse_from_str("2024-10-22 04:15:00+01:00", "%Y-%m-%d %H:%M:%S%z").expect("Failed to parse DateTime").with_timezone(&Utc)));
-    println!("election end: {:?}", SkyblockDay::date_to_skyblock(DateTime::parse_from_str("2019-06-11 17:55:00+00:00", "%Y-%m-%d %H:%M:%S%z").expect("Failed to parse DateTime").with_timezone(&Utc)));
-    let date = DateTime::parse_from_str("2024-10-22 04:15:00+01:00", "%Y-%m-%d %H:%M:%S%z").expect("Failed to parse DateTime").with_timezone(&Utc) - Duration::minutes(2821520);
-    println!("{date}");
-    println!("{:?}", SkyblockDay::date_to_skyblock(date));
+    println!("test: {:?}", SkyblockDay::new(14,3,379).as_datetime());
+    println!("election start: {:?}", SkyblockDay::new(30,6,379).as_datetime());
+    println!("election end: {:?}", SkyblockDay::new(30,6,380).as_datetime());
+
 
     // let mut calendar_database = DataBase::new();
     // let mut new_user = User::new("Global".to_string());
