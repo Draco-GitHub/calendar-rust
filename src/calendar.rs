@@ -3,6 +3,7 @@ use chrono::{DateTime, Duration, Utc};
 use serde::{Deserialize, Serialize};
 use serde::de::{Error};
 use uuid::Uuid;
+use crate::skyblock;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Event {
@@ -51,7 +52,7 @@ impl Calendar {
         Calendar { id: Uuid::new_v4(), title, description, events: HashMap::new() }
     }
 
-    pub fn get_id(&self) -> Uuid { self.id.clone() }
+    pub fn get_id(&self) -> &Uuid { &self.id }
     pub fn add_event(&mut self, event: Event) {
         self.events.insert(Uuid::new_v4(), event);
     }
@@ -78,8 +79,8 @@ impl Calendar {
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct User {
-    id:Uuid,
-    name: String,
+    pub id:Uuid,
+    pub name: String,
     calendars: HashMap<Uuid, Calendar>,
 }
 impl User {
@@ -99,7 +100,7 @@ impl User {
         self.calendars.insert(Uuid::new_v4(), calendar);
     }
 
-    pub fn get_calendar(&self, id: Uuid) -> Option<&Calendar> {
+    pub fn get_calendar(&self, id: &Uuid) -> Option<&Calendar> {
         self.calendars.get(&id)
     }
 }
@@ -110,7 +111,14 @@ pub struct DataBase {
 }
 impl DataBase {
     pub fn new() -> Self {
-        DataBase {users: HashMap::new()}
+        DataBase { users: HashMap::new() }.init()
+    }
+    fn init(mut self) -> Self {
+        let mut global_user = User::new("GLOBAL".to_string());
+        let skyblock = skyblock::generate_calendar(Utc::now(), Utc::now() + Duration::minutes(7460));
+        global_user.add_calendar(skyblock);
+        self.add_user(global_user);
+        self
     }
     pub fn add_user(&mut self, user: User) {
         self.users.insert(user.id, user);

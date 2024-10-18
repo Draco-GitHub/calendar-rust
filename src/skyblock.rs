@@ -14,7 +14,7 @@ impl SkyblockDay {
     pub fn new( day: i32, month: i32, year: i32) -> Self {
         SkyblockDay { day, month, year }
     }
-    pub(crate) fn as_datetime(&self) -> DateTime<Utc> {
+    pub fn as_datetime(&self) -> DateTime<Utc> {
         let year_start = DateTime::parse_from_str("2019-06-11 17:55:00+00:00", "%Y-%m-%d %H:%M:%S%z")
             .expect("Failed to parse DateTime")
             .with_timezone(&Utc);
@@ -24,7 +24,7 @@ impl SkyblockDay {
         year_start + real_duration
     }
 
-    pub(crate) fn date_to_skyblock(date:DateTime<Utc>) -> Self {
+    pub fn date_to_skyblock(date:DateTime<Utc>) -> Self {
         let year_start = DateTime::parse_from_str("2019-06-11 17:55:00+00:00", "%Y-%m-%d %H:%M:%S%z")
             .expect("Failed to parse DateTime")
             .with_timezone(&Utc);
@@ -38,9 +38,18 @@ impl SkyblockDay {
         SkyblockDay::new(day, month, year)
     }
 
-    pub(crate) fn get_events(&mut self) -> Vec<Event> {
+    pub fn get_events(&mut self, previous_events: &Vec<Event>, previous_elections: &Vec<Election>) -> Vec<&'a Event> {
         let mut events = Vec::new();
-        let option = Self::get_election(self.year+1);
+
+        for event in previous_events {
+            println!("{}", event.modulo(self.as_datetime()));
+            if event.modulo(self.as_datetime()) == 0 {
+                println!("{event:?}");
+                events.push(event)
+            }
+        }
+
+        let option = Self::get_election(self.year+1, previous_elections);
         if option.is_none() {
             return events
         }
@@ -49,13 +58,7 @@ impl SkyblockDay {
         println!("{:?}", election);
         for event in election_events {
             if event.get_start_time() == self.as_datetime() {
-                events.push(event);
-            }
-        }
-        let skyblock_events:Vec<Event> = read_json_from_file("skyblock.json").expect("Failed to read skyblock.json");
-        for event in skyblock_events {
-            if event.modulo(self.as_datetime()) == 0 {
-                println!("{event:?}")
+                events.push(&event);
             }
         }
         events
@@ -72,9 +75,8 @@ impl SkyblockDay {
         date.checked_add_signed(Duration::hours(1)).unwrap().with_minute(15).unwrap().with_second(0).unwrap()
     }
 
-    fn get_election(sb_year: i32) -> Option<Election> {
-        let elections:Vec<Election> = read_json_from_file("elections.json").expect("Failed to read json");
-        for election in elections {
+    fn get_election(sb_year: i32, previous_elections: &Vec<Election>) -> Option<Election> {
+        for &election in previous_elections {
             if election.year == sb_year {
                 return Some(election);
             }
@@ -159,19 +161,16 @@ impl Election {
 pub fn generate_calendar(from: DateTime<Utc>, to: DateTime<Utc>) -> Calendar {
     let mut calendar = Calendar::new("Skyblock".to_string(), None);
     let mut next_valid_day = SkyblockDay::get_next_skyblock_day(from);
-    let events:Vec<Event> = read_json_from_file("skyblock_events.json").unwrap();
+    let previous_events:Vec<Event> = read_json_from_file("skyblock_events.json").unwrap();
+    let previous_elections:Vec<Election> = read_json_from_file("elections.json").unwrap();
+
     while next_valid_day < to {
-        for event in &events {
-            println!("{}", event.modulo(next_valid_day));
-            if (event.modulo(next_valid_day) == 0 ) {
-                let mut sb_day = SkyblockDay::date_to_skyblock(next_valid_day);
-                let sb_events = sb_day.get_events();
-                for sb_event in sb_events{
-                    println!("Added event: {sb_event:?}");
-                    calendar.add_event(sb_event)
-                }
-            }
+        let mut sb_day = SkyblockDay::date_to_skyblock(next_valid_day);
+        let sb_events = sb_day.get_events(&previous_events, &previous_elections);
+        for event in sb_events {
+            calendar.add_event(event)
         }
+        next_valid_day += Duration::minutes(20)
     }
     calendar
 }

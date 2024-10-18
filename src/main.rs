@@ -37,33 +37,20 @@ fn init_logger() {
 }
 
 fn main() -> io::Result<()> {
-    println!("test: {:?}", SkyblockDay::new(14,3,379).as_datetime());
-    println!("election start: {:?}", SkyblockDay::new(30,6,379).as_datetime());
-    println!("election end: {:?}", SkyblockDay::new(30,6,380).as_datetime());
-
-    let x = DateTime::parse_from_str("2024-10-17 13:55:00+01:00", "%Y-%m-%d %H:%M:%S%z").expect("no x");
-    let y = DateTime::parse_from_str("2024-10-22 04:15:00+01:00", "%Y-%m-%d %H:%M:%S%z").expect("no y");
-    let z = y-x;
-    println!("{}", x + Duration::seconds(z.num_seconds()));
-    let (days, hours, minutes) = seconds_to_dhm(z.num_seconds());
-    println!("{} days, {} hours, {} minutes", days, hours, minutes);
-
-
-    let mut calendar_database = DataBase::new();
-    let mut new_user = User::new("Global".to_string());
-    // let mut new_calendar:Calendar = skyblock::generate_calendar(Utc::now(), Utc::now()+Duration::minutes(7460));
-    // let calendar_id = new_calendar.get_id();
-    // new_user.add_calendar(new_calendar);
-    // let mut calendar = new_user.get_calendar(calendar_id).unwrap();
+    // println!("test: {:?}", SkyblockDay::new(14,3,379).as_datetime());
+    // println!("election start: {:?}", SkyblockDay::new(30,6,379).as_datetime());
+    // println!("election end: {:?}", SkyblockDay::new(30,6,380).as_datetime());
     //
-    calendar_database.add_user(new_user.clone());
+    // let x = DateTime::parse_from_str("2024-10-17 13:55:00+01:00", "%Y-%m-%d %H:%M:%S%z").expect("no x");
+    // let y = DateTime::parse_from_str("2024-10-22 04:15:00+01:00", "%Y-%m-%d %H:%M:%S%z").expect("no y");
+    // let z = y-x;
     //
-    // let mut sbday = SkyblockDay::new(1, 1, 378);
-    // let ev = sbday.find_events();
-    // println!("{:?}", ev);
-    // println!("{:?}", calendar_database.list_users());
-    // println!("{:?}", calendar_database.get_user(new_user.clone().get_id()));
-    
+    // let (days, hours, minutes) = seconds_to_dhm(z.num_seconds());
+
+
+    let calendar_database = DataBase::new();
+    println!("{:?}", calendar_database.list_users());
+
     init_logger();
     init_api()?;
 
