@@ -2,7 +2,6 @@ mod helpers;
 mod calendar;
 mod api;
 mod logger;
-mod queue;
 
 use log::info;
 use crate::logger::init_logger;

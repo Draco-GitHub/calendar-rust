@@ -1,42 +1,7 @@
 use std::collections::HashMap;
-use chrono::{Duration, Utc};
-use serde::{Deserialize, Serialize};
+use chrono::{Utc};
 use warp::{Filter, Rejection, Reply};
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-enum AuctionItem {
-    Pet(Pet),
-    Armor(Armor),
-}
-
-#[derive(Clone, Debug, Serialize, Deserialize)]
-struct Pet {
-    name: String,
-    level: i16,
-    exp: i32,
-    candy: i8,
-}
-
-
-#[derive(Clone, Debug, Serialize, Deserialize)]
-enum ArmorType {
-    Helmet,
-    Chestplate,
-    Leggings,
-    Boots,
-}
-
-#[derive(Clone, Debug, Serialize, Deserialize)]
-struct Armor {
-    name: String,
-    armor_type: ArmorType,
-    enchants: Vec<String>,
-    gemstones: Vec<String>,
-    fuming: i16,
-    art_of_piece: i16,
-    reforge: String,
-    star: i16,
-}
+use crate::api::auction_items::{Armor, ArmorType, AuctionItem, Pet};
 
 pub fn auctions_routes() -> impl Filter<Extract = impl Reply, Error = Rejection> + Clone {
     let auction_path = warp::path("auction");
@@ -69,22 +34,23 @@ pub fn auctions_routes() -> impl Filter<Extract = impl Reply, Error = Rejection>
 
 async fn list_auctions_handler() -> Result<impl Reply, Rejection> {
     let sample_auctions: Vec<AuctionItem> = vec![
-        AuctionItem::Pet(Pet {
-            name: "Golden Dragon".to_string(),
-            level: 200,
-            exp: 100_000_000,
-            candy: 0,
-        }),
-        AuctionItem::Armor(Armor {
-            name: "Necron's Helmet".to_string(),
-            armor_type: ArmorType::Helmet,
-            enchants: vec!["Protection V".to_string(), "Growth VI".to_string()],
-            gemstones: vec!["Jasper".to_string()],
-            fuming: 5,
-            art_of_piece: 1,
-            reforge: "Ancient".to_string(),
-            star: 5,
-        }),
+        AuctionItem::Pet(Pet::new (
+            "Golden Dragon".to_string(),
+            200,
+            100_000_000,
+             0,
+        )),
+        AuctionItem::Armor(
+            Armor::new(
+                "Necron's Helmet".to_string(),
+                ArmorType::Helmet,
+                vec!["Protection V".to_string(), "Growth VI".to_string()],
+                vec!["Jasper".to_string()],
+                5,
+                1,
+                "Ancient".to_string(),
+                5,
+        )),
     ];
 
 
@@ -105,8 +71,8 @@ async fn lowest_bin_handler(item: String) -> Result<impl Reply, Rejection> {
 
     let lowest_bins = HashMap::from([
         ("Dragon Sword".to_string(), 75000.0),
-        ("Magic Bow".to_string(), 30000.0),
-        ("Enchanted Armor".to_string(), 45000.0),
+        ("Terminator".to_string(), 30000.0),
+        ("Armor".to_string(), 45000.0),
     ]);
 
     match lowest_bins.get(&item) {

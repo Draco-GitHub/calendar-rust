@@ -7,7 +7,7 @@ use crate::api::calendar::calendar_routes;
 mod bazaar;
 mod auctions;
 mod calendar;
-
+mod auction_items;
 
 pub fn build_routes() -> impl Filter<Extract = impl Reply, Error = Rejection> + Clone {
     let health = warp::path("health")
