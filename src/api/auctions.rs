@@ -1,8 +1,14 @@
+use crate::api::auction_items::{
+    Armor, ArmorType, AuctionItem, AuctionListing, HypixelAuction, Pet,
+};
+use chrono::Utc;
+use reqwest;
+use serde::{Deserialize, Serialize};
+use serde_json::Value;
 use std::collections::HashMap;
-use chrono::{Utc};
+use std::sync::Mutex;
 use warp::{Filter, Rejection, Reply};
-use crate::api::auction_items::{Armor, ArmorType, AuctionItem, Pet};
-
+static TRACKING: Mutex<Vec<String>> = Mutex::new(Vec::new());
 pub fn auctions_routes() -> impl Filter<Extract = impl Reply, Error = Rejection> + Clone {
     let auction_path = warp::path("auction");
 
@@ -26,38 +32,25 @@ pub fn auctions_routes() -> impl Filter<Extract = impl Reply, Error = Rejection>
         .and(warp::query::<String>())
         .and_then(lowest_bin_handler);
 
-    list_auctions
-        .or(track_auction)
-        .or(lowest_bin)
+    list_auctions.or(track_auction).or(lowest_bin)
 }
 
-
 async fn list_auctions_handler() -> Result<impl Reply, Rejection> {
-    let sample_auctions: Vec<AuctionItem> = vec![
-        AuctionItem::Pet(Pet::new (
-            "Golden Dragon".to_string(),
-            200,
-            100_000_000,
-             0,
-        )),
-        AuctionItem::Armor(
-            Armor::new(
-                "Necron's Helmet".to_string(),
-                ArmorType::Helmet,
-                vec!["Protection V".to_string(), "Growth VI".to_string()],
-                vec!["Jasper".to_string()],
-                5,
-                1,
-                "Ancient".to_string(),
-                5,
-        )),
-    ];
+    let x: HypixelAuction = reqwest::get("https://api.hypixel.net/v2/skyblock/auctions")
+        .await
+        .unwrap()
+        .json::<HypixelAuction>()
+        .await
+        .unwrap();
+    println!("{:?}", x.auctions);
 
-
-    Ok(warp::reply::json(&sample_auctions))
+    Ok(warp::reply::json(
+        &serde_json::json!({"test": format!("{:?}",x.auctions)}),
+    ))
 }
 
 async fn track_auction_handler(item: String) -> Result<impl Reply, Rejection> {
+    TRACKING.lock().unwrap().push(item.clone());
     let response = serde_json::json!({
         "message": format!("Now tracking auctions for '{}'", item),
         "item": item,
@@ -68,7 +61,6 @@ async fn track_auction_handler(item: String) -> Result<impl Reply, Rejection> {
 }
 
 async fn lowest_bin_handler(item: String) -> Result<impl Reply, Rejection> {
-
     let lowest_bins = HashMap::from([
         ("Dragon Sword".to_string(), 75000.0),
         ("Terminator".to_string(), 30000.0),
@@ -82,13 +74,13 @@ async fn lowest_bin_handler(item: String) -> Result<impl Reply, Rejection> {
                 "lowest_bin": price,
                 "last_updated": Utc::now()
             })),
-            warp::http::StatusCode::OK
+            warp::http::StatusCode::OK,
         )),
         None => Ok(warp::reply::with_status(
             warp::reply::json(&serde_json::json!({
                 "error": format!("No BIN data found for '{}'", item)
             })),
-            warp::http::StatusCode::NOT_FOUND
+            warp::http::StatusCode::NOT_FOUND,
         )),
     }
 }
